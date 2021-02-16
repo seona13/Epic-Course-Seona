@@ -59,7 +59,7 @@ public class SpawnManager : MonoBehaviour
 
 	void SpawnEnemy()
 	{
-		GameObject enemy = Instantiate(_enemies[0], _inlet.position, Quaternion.identity, transform);
+		GameObject enemy = Instantiate(_enemies[Random.Range(0, _enemies.Length)], _inlet.position, Quaternion.identity, transform);
 		enemy.GetComponent<EnemyAI>().SetDestination(_outlet.position);
 	}
 }
