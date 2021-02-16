@@ -35,7 +35,6 @@ public class EnemyAI : MonoBehaviour
 
 	public void SetDestination(Vector3 pos)
 	{
-		Debug.Log(_agent);
 		_agent.SetDestination(pos);
 	}
 }
