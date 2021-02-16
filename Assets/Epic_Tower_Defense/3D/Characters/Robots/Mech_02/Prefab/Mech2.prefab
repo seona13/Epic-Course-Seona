@@ -437,6 +437,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _outlet: {fileID: 0}
+  _type: 1
+  _maxHealth: 200
+  _currentHealth: 0
+  _killValue: 50
 --- !u!1 &1088550950582580
 GameObject:
   m_ObjectHideFlags: 0

@@ -4,11 +4,16 @@ using UnityEngine;
 using UnityEngine.AI;
 
 
+public enum EnemyType { WALKER, TANK }
+
 public class EnemyAI : MonoBehaviour
 {
 	private NavMeshAgent _agent;
+
 	[SerializeField]
 	private Transform _outlet;
+	[SerializeField]
+	private EnemyType _type;
 	[SerializeField]
 	private int _maxHealth = 200;
 	[SerializeField]
