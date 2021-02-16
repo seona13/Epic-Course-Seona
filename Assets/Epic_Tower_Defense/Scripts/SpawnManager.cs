@@ -20,6 +20,13 @@ public class SpawnManager : MonoBehaviour
 		}
 	}
 
+	[SerializeField]
+	private Transform _inlet;
+	[SerializeField]
+	private Transform _outlet;
+	[SerializeField]
+	private GameObject[] _enemies;
+
 
 
 	void Awake()
@@ -32,11 +39,27 @@ public class SpawnManager : MonoBehaviour
 	}
 
 
-	private void OnDestroy()
+	void Start()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			SpawnEnemy();
+		}
+	}
+
+
+	void OnDestroy()
 	{
 		if (_Instance == this)
 		{
 			_Instance = null;
 		}
+	}
+
+
+	void SpawnEnemy()
+	{
+		GameObject enemy = Instantiate(_enemies[0], _inlet.position, Quaternion.identity, transform);
+		enemy.GetComponent<EnemyAI>().SetDestination(_outlet.position);
 	}
 }
