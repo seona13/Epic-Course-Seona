@@ -27,6 +27,8 @@ public class SpawnManager : MonoBehaviour
 	[SerializeField]
 	private GameObject[] _enemies;
 
+	private WaitForSeconds _spawnRate = new WaitForSeconds(2.5f);
+
 
 
 	void Awake()
@@ -41,10 +43,7 @@ public class SpawnManager : MonoBehaviour
 
 	void Start()
 	{
-		for (int i = 0; i < 10; i++)
-		{
-			SpawnEnemy();
-		}
+		StartCoroutine(SpawnEnemy());
 	}
 
 
@@ -57,9 +56,13 @@ public class SpawnManager : MonoBehaviour
 	}
 
 
-	void SpawnEnemy()
+	IEnumerator SpawnEnemy()
 	{
-		GameObject enemy = Instantiate(_enemies[Random.Range(0, _enemies.Length)], _inlet.position, Quaternion.identity, transform);
-		enemy.GetComponent<EnemyAI>().SetDestination(_outlet.position);
+		while (true)
+		{
+			GameObject enemy = Instantiate(_enemies[Random.Range(0, _enemies.Length)], _inlet.position, Quaternion.identity, transform);
+			enemy.GetComponent<EnemyAI>().SetDestination(_outlet.position);
+			yield return _spawnRate;
+		}
 	}
 }
