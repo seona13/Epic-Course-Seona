@@ -27,14 +27,9 @@ public class EnemyAI : MonoBehaviour
 		{
 			Debug.LogError("Missing NavMeshAgent on enemy");
 		}
+		_agent.SetDestination(SpawnManager.Instance.outlet.transform.position);
 
 		// Give enemy full health on spawn.
 		_currentHealth = _maxHealth;
-	}
-
-
-	public void SetDestination(Vector3 pos)
-	{
-		_agent.SetDestination(pos);
 	}
 }

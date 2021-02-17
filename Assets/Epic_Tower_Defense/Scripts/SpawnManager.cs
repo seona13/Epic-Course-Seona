@@ -12,9 +12,7 @@ public class SpawnManager : MonoBehaviour
 		{
 			if (_Instance == null)
 			{
-				var obj = new GameObject().AddComponent<SpawnManager>();
-				obj.name = "Spawn_Manager";
-				_Instance = obj.GetComponent<SpawnManager>();
+				Debug.LogError("Missing SpawnManager");
 			}
 			return _Instance;
 		}
@@ -22,8 +20,7 @@ public class SpawnManager : MonoBehaviour
 
 	[SerializeField]
 	private Transform _inlet;
-	[SerializeField]
-	private Transform _outlet;
+	public Transform outlet;
 	[SerializeField]
 	private GameObject[] _enemies;
 
@@ -46,6 +43,7 @@ public class SpawnManager : MonoBehaviour
 			Debug.LogWarning("Second instance of SpawnManager created. Automatic self-destruct triggered.");
 			Destroy(this.gameObject);
 		}
+		_Instance = this;
 	}
 
 
@@ -84,10 +82,16 @@ public class SpawnManager : MonoBehaviour
 		while (_spawnCount < _waveSpawns)
 		{
 			GameObject enemy = Instantiate(_enemies[Random.Range(0, _enemies.Length)], _inlet.position, Quaternion.identity, transform);
-			enemy.GetComponent<EnemyAI>().SetDestination(_outlet.position);
 			_spawnCount++;
 
 			yield return _spawnRate;
 		}
+	}
+
+
+	public void DespawnEnemy(EnemyAI enemy)
+	{
+		_killCount++;
+		enemy.gameObject.SetActive(false);
 	}
 }
