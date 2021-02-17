@@ -5,21 +5,20 @@ using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
 {
-	private static SpawnManager _Instance;
+	private static SpawnManager _instance;
 	public static SpawnManager Instance
 	{
 		get
 		{
-			if (_Instance == null)
+			if (_instance == null)
 			{
 				Debug.LogError("Missing SpawnManager");
 			}
-			return _Instance;
+			return _instance;
 		}
 	}
 
-	[SerializeField]
-	private Transform _inlet;
+	public Transform inlet;
 	public Transform outlet;
 	[SerializeField]
 	private GameObject[] _enemies;
@@ -38,12 +37,12 @@ public class SpawnManager : MonoBehaviour
 
 	void Awake()
 	{
-		if (_Instance != null)
+		if (_instance != null)
 		{
 			Debug.LogWarning("Second instance of SpawnManager created. Automatic self-destruct triggered.");
 			Destroy(this.gameObject);
 		}
-		_Instance = this;
+		_instance = this;
 	}
 
 
@@ -70,9 +69,9 @@ public class SpawnManager : MonoBehaviour
 
 	void OnDestroy()
 	{
-		if (_Instance == this)
+		if (_instance == this)
 		{
-			_Instance = null;
+			_instance = null;
 		}
 	}
 
@@ -81,7 +80,7 @@ public class SpawnManager : MonoBehaviour
 	{
 		while (_spawnCount < _waveSpawns)
 		{
-			GameObject enemy = Instantiate(_enemies[Random.Range(0, _enemies.Length)], _inlet.position, Quaternion.identity, transform);
+			GameObject enemy = PoolManager.Instance.RequestEnemy();
 			_spawnCount++;
 
 			yield return _spawnRate;

@@ -27,9 +27,24 @@ public class EnemyAI : MonoBehaviour
 		{
 			Debug.LogError("Missing NavMeshAgent on enemy");
 		}
+	}
+
+
+	void OnEnable()
+	{
+		_agent.Warp(SpawnManager.Instance.inlet.position);
 		_agent.SetDestination(SpawnManager.Instance.outlet.transform.position);
 
 		// Give enemy full health on spawn.
 		_currentHealth = _maxHealth;
+	}
+
+
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.gameObject.CompareTag("Outlet"))
+		{
+			SpawnManager.Instance.DespawnEnemy(this);
+		}
 	}
 }
