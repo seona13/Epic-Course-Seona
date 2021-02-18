@@ -32,19 +32,10 @@ public class EnemyAI : MonoBehaviour
 
 	void OnEnable()
 	{
-		_agent.Warp(SpawnManager.Instance.inlet.position);
-		_agent.SetDestination(SpawnManager.Instance.outlet.transform.position);
+		_agent.Warp(SpawnManager.Instance.GetInlet().position);
+		_agent.SetDestination(SpawnManager.Instance.GetOutlet().transform.position);
 
 		// Give enemy full health on spawn.
 		_currentHealth = _maxHealth;
-	}
-
-
-	void OnTriggerEnter(Collider other)
-	{
-		if (other.gameObject.CompareTag("Outlet"))
-		{
-			SpawnManager.Instance.DespawnEnemy(this);
-		}
 	}
 }

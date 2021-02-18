@@ -2,22 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolManager : MonoBehaviour
+public class PoolManager : MonoSingleton<PoolManager>
 {
-	private static PoolManager _instance;
-	public static PoolManager Instance
-	{
-		get
-		{
-			if (_instance == null)
-			{
-				Debug.LogError("Missing PoolManager.");
-			}
-
-			return _instance;
-		}
-	}
-
 	[SerializeField]
 	private GameObject _enemyContainer;
 	[SerializeField]
@@ -26,16 +12,16 @@ public class PoolManager : MonoBehaviour
 
 
 
-	void Awake()
+	public override void Init()
 	{
-		_instance = this;
+		base.Init();
+		_enemyPool = new List<GameObject>();
 	}
 
 
-	private void Start()
+	void Start()
 	{
-		_enemyPool = new List<GameObject>();
-		GenerateEnemies(10);
+		GenerateEnemies(SpawnManager.Instance.GetWaveMultiplier());
 	}
 
 
