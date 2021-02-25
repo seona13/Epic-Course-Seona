@@ -2,26 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class BuildSpot : MonoBehaviour
 {
-	bool _available = true;
+	[SerializeField]
+	private GameObject _particlesObject;
+	private ParticleSystem _particles;
+	private bool _available = true;
+	private bool _canPlaceTower = false;
 
-	bool canPlaceTower = false;
 
 
-
-	private void OnMouseEnter()
+	void OnMouseEnter()
 	{
 		if (TowerPlacement.Instance.towerPlacementMode && _available)
 		{
-			TowerPlacement.Instance.PossibleTowerPlacement();
+			TowerPlacement.Instance.PossibleTowerPlacement(transform.position);
 		}
 	}
 
 
-	private void OnMouseDown()
+	void OnMouseDown()
 	{
-		if (canPlaceTower)
+		if (_canPlaceTower)
 		{
 			TowerPlacement.Instance.PlaceTower();
 			_available = false;
@@ -29,21 +32,22 @@ public class BuildSpot : MonoBehaviour
 	}
 
 
-	private void OnMouseExit()
+	void OnMouseExit()
 	{
-
+		if (TowerPlacement.Instance.towerPlacementMode && _available)
+		{
+			TowerPlacement.Instance.LeaveBuildSpot();
+		}
 	}
 
 
-	// Start is called before the first frame update
 	void Start()
 	{
-
+		_particles = _particlesObject.GetComponent<ParticleSystem>();
 	}
 
-	// Update is called once per frame
+
 	void Update()
 	{
-
 	}
 }

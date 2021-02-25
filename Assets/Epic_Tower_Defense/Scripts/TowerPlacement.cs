@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 
 public class TowerPlacement : MonoSingleton<TowerPlacement>
 {
@@ -9,8 +11,11 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 	[SerializeField]
 	private GameObject[] _prototypes;
 	private GameObject _prototype;
+	private bool _followMouse = true;
 
 	public bool towerPlacementMode = false;
+	public Action onPlacementModeActivate;
+	public Action onPlacementModeDeactivate;
 
 
 
@@ -42,7 +47,7 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 			_prototype = null;
 		}
 
-		if (towerPlacementMode)
+		if (towerPlacementMode && _followMouse)
 		{
 			Ray rayOrigin = Camera.main.ScreenPointToRay(Input.mousePosition);
 			RaycastHit hitInfo;
@@ -55,10 +60,12 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 	}
 
 
-	public void PossibleTowerPlacement() // OnMouseEnter
+	public void PossibleTowerPlacement(Vector3 pos) // OnMouseEnter
 	{
-		// turn radius green
+		_followMouse = false;
 		// snap to build spot
+		_prototype.transform.position = pos;
+		// turn radius green
 	}
 
 
@@ -66,5 +73,11 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 	{
 		// get which tower we're placing
 		// 
+	}
+
+
+	public void LeaveBuildSpot()
+	{
+		_followMouse = true;
 	}
 }
