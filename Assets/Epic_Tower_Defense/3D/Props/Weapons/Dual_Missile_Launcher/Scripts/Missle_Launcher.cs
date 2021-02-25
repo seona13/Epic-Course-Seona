@@ -29,7 +29,6 @@ namespace GameDevHQ.FileBase.Missle_Launcher_Dual_Turret
 
 		#region ITower implementation
 		public int BuyFor { get; set; } = 500;
-
 		public int SellFor { get; set; } = 250;
 		#endregion
 

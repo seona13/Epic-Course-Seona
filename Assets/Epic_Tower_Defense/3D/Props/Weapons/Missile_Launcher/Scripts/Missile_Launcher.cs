@@ -43,10 +43,8 @@ namespace GameDevHQ.FileBase.Missile_Launcher
 
 		#region ITower implementation
 		public int BuyFor { get; set; } = 250;
-
 		public int SellFor { get; set; } = 125;
 		#endregion
-
 
 		private void Update()
 		{

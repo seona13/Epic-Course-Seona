@@ -35,7 +35,6 @@ namespace GameDevHQ.FileBase.Dual_Gatling_Gun
 
 		#region ITower implementation
 		public int BuyFor { get; set; } = 150;
-
 		public int SellFor { get; set; } = 75;
 		#endregion
 
