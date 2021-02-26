@@ -50,6 +50,7 @@ public class BuildSpot : MonoBehaviour
 		{
 			TowerPlacement.Instance.PlaceTower(transform.position);
 			_available = false;
+			_particles.Stop();
 		}
 	}
 

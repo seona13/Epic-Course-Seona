@@ -17,6 +17,11 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 	private MeshRenderer _radius;
 	private bool _followMouse = true;
 
+	[SerializeField]
+	private Color _availableRadius;
+	[SerializeField]
+	private Color _unavailableRadius;
+
 	public bool towerPlacementMode = false;
 	public static event Action<bool> onPlacementModeActive;
 
@@ -94,7 +99,7 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 		// snap to build spot
 		_prototypePool[_index].transform.position = pos;
 		// turn radius green
-		_radius.material.color = Color.green;
+		_radius.material.color = _availableRadius;
 	}
 
 
@@ -102,13 +107,13 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 	{
 		Instantiate(_towers[_index], pos, Quaternion.identity, _towerContainer);
 		_followMouse = true;
-		_radius.material.color = Color.red;
+		_radius.material.color = _unavailableRadius;
 	}
 
 
 	public void LeaveBuildSpot()
 	{
 		_followMouse = true;
-		_radius.material.color = Color.red;
+		_radius.material.color = _unavailableRadius;
 	}
 }

@@ -4290,6 +4290,8 @@ MonoBehaviour:
   _prototypes:
   - {fileID: 1425032208015248, guid: ea794d7c4859f61459aa9f1a0fd374d3, type: 3}
   - {fileID: 1821146363788296, guid: d797f1ed1ef83a249aa8a8a7176a3c76, type: 3}
+  _availableRadius: {r: 0, g: 1, b: 0, a: 0.39215687}
+  _unavailableRadius: {r: 1, g: 0, b: 0, a: 0.39215687}
   towerPlacementMode: 0
 --- !u!4 &771707168
 Transform:
