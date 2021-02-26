@@ -14,8 +14,7 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 	private bool _followMouse = true;
 
 	public bool towerPlacementMode = false;
-	public Action onPlacementModeActivate;
-	public Action onPlacementModeDeactivate;
+	public static event Action<bool> onPlacementModeActive;
 
 
 
@@ -29,21 +28,23 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 	{
 		if (Input.GetKeyDown(KeyCode.Alpha1))
 		{
-			towerPlacementMode = true;
+			PlacmentModeActive(true);
 			Destroy(_prototype);
 			_prototype = Instantiate(_prototypes[0]);
+			// turn on radius. How??
 		}
 		else if (Input.GetKeyDown(KeyCode.Alpha2))
 		{
-			towerPlacementMode = true;
+			PlacmentModeActive(true);
 			Destroy(_prototype);
 			_prototype = Instantiate(_prototypes[1]);
+			// turn on radius. How??
 		}
 
 		// Right-click to exit placement mode
 		if (towerPlacementMode && Input.GetMouseButtonDown(1))
 		{
-			towerPlacementMode = false;
+			PlacmentModeActive(false);
 			_prototype = null;
 		}
 
@@ -56,6 +57,16 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 			{
 				_prototype.transform.position = hitInfo.point;
 			}
+		}
+	}
+
+
+	public void PlacmentModeActive(bool status)
+	{
+		towerPlacementMode = status;
+		if (onPlacementModeActive != null)
+		{
+			onPlacementModeActive(status);
 		}
 	}
 

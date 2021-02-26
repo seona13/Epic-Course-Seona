@@ -5,17 +5,40 @@ using UnityEngine;
 
 public class BuildSpot : MonoBehaviour
 {
-	[SerializeField]
-	private GameObject _particlesObject;
 	private ParticleSystem _particles;
 	private bool _available = true;
 	private bool _canPlaceTower = false;
+	[SerializeField]
+	private bool _placementModeActive = false;
 
+
+
+	private void OnEnable()
+	{
+		TowerPlacement.onPlacementModeActive += PlacementMode;
+	}
+
+
+	void Start()
+	{
+		_particles = GetComponentInChildren<ParticleSystem>();
+	}
+
+
+	void Update()
+	{
+	}
+
+
+	private void OnDisable()
+	{
+		TowerPlacement.onPlacementModeActive -= PlacementMode;
+	}
 
 
 	void OnMouseEnter()
 	{
-		if (TowerPlacement.Instance.towerPlacementMode && _available)
+		if (_placementModeActive && _available)
 		{
 			TowerPlacement.Instance.PossibleTowerPlacement(transform.position);
 		}
@@ -34,20 +57,23 @@ public class BuildSpot : MonoBehaviour
 
 	void OnMouseExit()
 	{
-		if (TowerPlacement.Instance.towerPlacementMode && _available)
+		if (_placementModeActive && _available)
 		{
 			TowerPlacement.Instance.LeaveBuildSpot();
 		}
 	}
 
 
-	void Start()
+	void PlacementMode(bool status)
 	{
-		_particles = _particlesObject.GetComponent<ParticleSystem>();
-	}
-
-
-	void Update()
-	{
+		_placementModeActive = status;
+		if (status && _available)
+		{
+			_particles.Play();
+		}
+		else
+		{
+			_particles.Stop();
+		}
 	}
 }
