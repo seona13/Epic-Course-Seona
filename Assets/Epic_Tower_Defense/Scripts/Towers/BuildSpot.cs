@@ -8,7 +8,6 @@ public class BuildSpot : MonoBehaviour
 	private ParticleSystem _particles;
 	private bool _available = true;
 	private bool _canPlaceTower = false;
-	[SerializeField]
 	private bool _placementModeActive = false;
 
 
