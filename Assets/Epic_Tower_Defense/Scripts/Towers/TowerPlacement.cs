@@ -9,6 +9,8 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 	[SerializeField]
 	private Transform _towerContainer;
 	[SerializeField]
+	private GameObject[] _towers;
+	[SerializeField]
 	private GameObject[] _prototypes;
 	private GameObject[] _prototypePool;
 	private int _index;
@@ -96,10 +98,11 @@ public class TowerPlacement : MonoSingleton<TowerPlacement>
 	}
 
 
-	public void PlaceTower() // OnMouseDown
+	public void PlaceTower(Vector3 pos) // OnMouseDown
 	{
-		// get which tower we're placing
-		// 
+		Instantiate(_towers[_index], pos, Quaternion.identity, _towerContainer);
+		_followMouse = true;
+		_radius.material.color = Color.red;
 	}
 
 

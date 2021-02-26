@@ -4284,6 +4284,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _towerContainer: {fileID: 1506817136}
+  _towers:
+  - {fileID: 1425032208015248, guid: 75f3d166786e1cb40afc4396cd0bcc22, type: 3}
+  - {fileID: 1821146363788296, guid: 8d6b1413bfb162c44899f390a9d98c83, type: 3}
   _prototypes:
   - {fileID: 1425032208015248, guid: ea794d7c4859f61459aa9f1a0fd374d3, type: 3}
   - {fileID: 1821146363788296, guid: d797f1ed1ef83a249aa8a8a7176a3c76, type: 3}

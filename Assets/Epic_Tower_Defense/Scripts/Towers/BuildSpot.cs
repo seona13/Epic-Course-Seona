@@ -46,9 +46,9 @@ public class BuildSpot : MonoBehaviour
 
 	void OnMouseDown()
 	{
-		if (_canPlaceTower)
+		if (_available)
 		{
-			TowerPlacement.Instance.PlaceTower();
+			TowerPlacement.Instance.PlaceTower(transform.position);
 			_available = false;
 		}
 	}
