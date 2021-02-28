@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85c7cf67bef856144a05f930bb8817d3, type: 3}
+  m_Name: Gatling Gun
+  m_EditorClassIdentifier: 
+  towerID: 0
+  towerName: Gatling Gun
+  prefab: {fileID: 1425032208015248, guid: 75f3d166786e1cb40afc4396cd0bcc22, type: 3}
+  prototypePrefab: {fileID: 1425032208015248, guid: ea794d7c4859f61459aa9f1a0fd374d3,
+    type: 3}
+  buyFor: 100
+  sellFor: 50

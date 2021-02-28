@@ -1,20 +1,24 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 public class BuildSpot : MonoBehaviour
 {
-	private ParticleSystem _particles;
-	private bool _available = true;
-	private bool _canPlaceTower = false;
+	public static event Action<bool> onOpenPlot;
+	public static event Action onTryPlaceTower;
+
 	private bool _placementModeActive = false;
+	private bool _available = true;
+	private ParticleSystem _particles;
 
 
 
 	private void OnEnable()
 	{
-		TowerPlacement.onPlacementModeActive += PlacementMode;
+		TowerManager.onPlacementModeChange += PlacementMode;
+		TowerManager.onTowerPlaced += DeactivatePlot;
 	}
 
 
@@ -31,7 +35,8 @@ public class BuildSpot : MonoBehaviour
 
 	private void OnDisable()
 	{
-		TowerPlacement.onPlacementModeActive -= PlacementMode;
+		TowerManager.onPlacementModeChange -= PlacementMode;
+		TowerManager.onTowerPlaced -= DeactivatePlot;
 	}
 
 
@@ -39,28 +44,26 @@ public class BuildSpot : MonoBehaviour
 	{
 		if (_placementModeActive && _available)
 		{
-			TowerPlacement.Instance.PossibleTowerPlacement(transform.position);
+			OpenPlot(true);
 		}
 	}
 
 
 	void OnMouseDown()
 	{
-		if (_available)
+		if (_placementModeActive && _available)
 		{
-			TowerPlacement.Instance.PlaceTower(transform.position);
-			_available = false;
-			_particles.Stop();
+			if (onTryPlaceTower != null)
+			{
+				onTryPlaceTower();
+			}
 		}
 	}
 
 
 	void OnMouseExit()
 	{
-		if (_placementModeActive && _available)
-		{
-			TowerPlacement.Instance.LeaveBuildSpot();
-		}
+		OpenPlot(false);
 	}
 
 
@@ -73,6 +76,25 @@ public class BuildSpot : MonoBehaviour
 		}
 		else
 		{
+			_particles.Stop();
+		}
+	}
+
+
+	void OpenPlot(bool isOpen)
+	{
+		if (onOpenPlot != null)
+		{
+			onOpenPlot(isOpen);
+		}
+	}
+
+
+	void DeactivatePlot(Vector3 pos)
+	{
+		if (transform.position == pos)
+		{
+			_available = false;
 			_particles.Stop();
 		}
 	}

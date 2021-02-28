@@ -19,7 +19,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 	/// </summary>
 
 	[RequireComponent(typeof(AudioSource))] //Require Audio Source component
-	public class Gatling_Gun : MonoBehaviour, ITower
+	public class Gatling_Gun : MonoBehaviour
 	{
 		[SerializeField]
 		private MeshRenderer _radius;
@@ -31,11 +31,6 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
 		private AudioSource _audioSource; //reference to the audio source component
 		private bool _startWeaponNoise = true;
-
-		#region ITower implementation
-		public int BuyFor { get; set; } = 50;
-		public int SellFor { get; set; } = 25;
-		#endregion
 
 		// Use this for initialization
 		void Start()

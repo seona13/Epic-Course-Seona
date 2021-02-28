@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameDevHQ.FileBase.Missle_Launcher_Dual_Turret
 {
-	public class Missle_Launcher : MonoBehaviour, ITower
+	public class Missle_Launcher : MonoBehaviour
 	{
 		[SerializeField]
 		private GameObject _missilePrefab; //holds the missle gameobject to clone
@@ -26,11 +26,6 @@ namespace GameDevHQ.FileBase.Missle_Launcher_Dual_Turret
 		[SerializeField]
 		private float _destroyTime = 10.0f; //how long till the rockets get cleaned up
 		private bool _launched; //bool to check if we launched the rockets
-
-		#region ITower implementation
-		public int BuyFor { get; set; } = 500;
-		public int SellFor { get; set; } = 250;
-		#endregion
 
 		private void Update()
 		{

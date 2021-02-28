@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace GameDevHQ.FileBase.Missile_Launcher
 {
-	public class Missile_Launcher : MonoBehaviour, ITower
+	public class Missile_Launcher : MonoBehaviour
 	{
 		public enum MissileType
 		{
@@ -42,11 +42,6 @@ namespace GameDevHQ.FileBase.Missile_Launcher
 		private bool _launched; //bool to check if we launched the rockets
 		[SerializeField]
 		private Transform _target; //Who should the rocket fire at?
-
-		#region ITower implementation
-		public int BuyFor { get; set; } = 250;
-		public int SellFor { get; set; } = 125;
-		#endregion
 
 		private void Update()
 		{

@@ -19,7 +19,7 @@ namespace GameDevHQ.FileBase.Dual_Gatling_Gun
 	/// </summary>
 
 	[RequireComponent(typeof(AudioSource))] //Require Audio Source component
-	public class Dual_Gatling_Gun : MonoBehaviour, ITower
+	public class Dual_Gatling_Gun : MonoBehaviour
 	{
 		[SerializeField]
 		private Transform[] _gunBarrel; //Reference to hold the gun barrel
@@ -32,11 +32,6 @@ namespace GameDevHQ.FileBase.Dual_Gatling_Gun
 
 		private AudioSource _audioSource; //reference to the audio source component
 		private bool _startWeaponNoise = true;
-
-		#region ITower implementation
-		public int BuyFor { get; set; } = 150;
-		public int SellFor { get; set; } = 75;
-		#endregion
 
 		// Use this for initialization
 		void Start()
