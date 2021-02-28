@@ -7,34 +7,39 @@ public class CameraController : MonoBehaviour
 {
 	[SerializeField]
 	private float _zoomSpeed = 10f;
+	private float _zoomMin = 20f;
+	private float _zoomMax = 40f;
+
 	[SerializeField]
 	private float _panSpeed = 10f;
 	[SerializeField]
-	private float _panBorder = 25f;
+	private float _edgeBuffer = 0.05f;
+	[SerializeField]
+	private bool _edgeScrolling = true;
+	private float _panXMin = -40f, _panXMax = -20f;
+	private float _panZMin = -25f, _panZMax = -7f;
+	private float _leftEdge, _rightEdge, _bottomEdge, _topEdge;
 
-	private float _zoomMin = 20f;
-	private float _zoomMax = 40f;
-	private float _panXMin = -40f;
-	private float _panXMax = -20f;
-	private float _panZMin = -25f;
-	private float _panZMax = -7f;
-
-	private Camera _cameraComp;
-	private GameObject _parent;
+	private Vector3 _direction;
+	private Vector3 _mousePos;
+	private bool _inBounds;
 
 
 
 	void Start()
 	{
-		_cameraComp = GetComponent<Camera>();
-		_parent = transform.parent.gameObject;
+		CalculateEdges();
 	}
 
 
 	void Update()
 	{
-		DoZoom();
+		if (_edgeScrolling)
+		{
+			BoundaryCheck();
+		}
 		DoPan();
+		DoZoom();
 	}
 
 
@@ -42,8 +47,8 @@ public class CameraController : MonoBehaviour
 	{
 		if (Input.mouseScrollDelta.y != 0)
 		{
-			_cameraComp.fieldOfView += -Input.mouseScrollDelta.y * _zoomSpeed * Time.deltaTime;
-			_cameraComp.fieldOfView = Mathf.Clamp(_cameraComp.fieldOfView, _zoomMin, _zoomMax);
+			Camera.main.fieldOfView += -Input.mouseScrollDelta.y * _zoomSpeed * Time.deltaTime;
+			Camera.main.fieldOfView = Mathf.Clamp(Camera.main.fieldOfView, _zoomMin, _zoomMax);
 		}
 	}
 
@@ -51,33 +56,59 @@ public class CameraController : MonoBehaviour
 	void DoPan()
 	{
 		float horizontalInput = Input.GetAxis("Horizontal");
-		if (Input.mousePosition.x < _panBorder)
-		{
-			horizontalInput = -1;
-		}
-		else if (Input.mousePosition.x > (Screen.width - _panBorder))
-		{
-			horizontalInput = 1;
-		}
-
 		float verticalInput = Input.GetAxis("Vertical");
-		if (Input.mousePosition.y < _panBorder)
+		_mousePos = Input.mousePosition;
+
+		if (_edgeScrolling && _inBounds)
 		{
-			verticalInput = -1;
-		}
-		else if (Input.mousePosition.y > (Screen.height - _panBorder))
-		{
-			verticalInput = 1;
+			if (Input.mousePosition.x < _leftEdge)
+			{
+				horizontalInput = -1;
+			}
+			else if (Input.mousePosition.x > _rightEdge)
+			{
+				horizontalInput = 1;
+			}
+
+			if (Input.mousePosition.y < _bottomEdge)
+			{
+				verticalInput = -1;
+			}
+			else if (Input.mousePosition.y > _topEdge)
+			{
+				verticalInput = 1;
+			}
 		}
 
-		if (horizontalInput != 0 || verticalInput != 0)
+		_direction.x = horizontalInput;
+		_direction.z = verticalInput;
+
+		transform.Translate(_direction * _panSpeed * Time.deltaTime);
+		Vector3 newPos = transform.position;
+		newPos.x = Mathf.Clamp(newPos.x, _panXMin, _panXMax);
+		newPos.z = Mathf.Clamp(newPos.z, _panZMin, _panZMax);
+		transform.position = newPos;
+	}
+
+
+	void CalculateEdges()
+	{
+		_leftEdge = Screen.width * _edgeBuffer;
+		_rightEdge = Screen.width * (1 - _edgeBuffer);
+		_bottomEdge = Screen.height * _edgeBuffer;
+		_topEdge = Screen.height * (1 - _edgeBuffer);
+	}
+
+
+	void BoundaryCheck()
+	{
+		if (_mousePos.x < 0 || _mousePos.x > Screen.width || _mousePos.y < 0 || _mousePos.y > Screen.height)
 		{
-			_parent.transform.Translate(new Vector3(horizontalInput, 0, verticalInput) * _panSpeed * Time.deltaTime);
-			Vector3 newPos = new Vector3();
-			newPos.x = Mathf.Clamp(_parent.transform.position.x, _panXMin, _panXMax);
-			newPos.y = _parent.transform.position.y;
-			newPos.z = Mathf.Clamp(_parent.transform.position.z, _panZMin, _panZMax);
-			_parent.transform.position = newPos;
+			_inBounds = false;
+		}
+		else
+		{
+			_inBounds = true;
 		}
 	}
 }
