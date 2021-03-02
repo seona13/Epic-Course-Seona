@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace GameDevHQ.FileBase.Missle_Launcher_Dual_Turret
 {
-	public class Missle_Launcher : MonoBehaviour
+	public class Missle_Launcher : AttackTower
 	{
 		[SerializeField]
 		private GameObject _missilePrefab; //holds the missle gameobject to clone

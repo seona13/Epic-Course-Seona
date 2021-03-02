@@ -4941,7 +4941,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4230997169374272}
-  - {fileID: 4467111432530078}
   m_Father: {fileID: 4633165491543876}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4976,6 +4975,7 @@ Transform:
   m_Children:
   - {fileID: 4813843730394250}
   - {fileID: 4487937688588952}
+  - {fileID: 4467111432530078}
   m_Father: {fileID: 4230997169374272}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5074,8 +5074,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c7edd4816764b2cb111ea15f8f117a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _radius: {fileID: 7585872632805822179}
   _radiusMesh: {fileID: 8131069120162662300}
+  _rotatingPart: {fileID: 1210388328600386}
   Muzzle_Flash: {fileID: 1905276477678454}
   bulletCasings: {fileID: 198239830521320308}
   fireSound: {fileID: 8300000, guid: 08e0cb88300e54b09aa0deb684c3a3de, type: 3}
@@ -5487,12 +5487,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1905276477678454}
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -0.14400001, y: 0.78152764, z: 2.7986846}
+  m_LocalPosition: {x: 0.1474918, y: 0.11914596, z: 3.005244}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4477828785630856}
-  m_Father: {fileID: 4445333471610312}
-  m_RootOrder: 1
+  m_Father: {fileID: 4483940257070060}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!198 &198006838423099326
 ParticleSystem:
@@ -14982,7 +14982,6 @@ GameObject:
   - component: {fileID: 2082168253788608631}
   - component: {fileID: 8131069120162662300}
   - component: {fileID: 7054069837054055055}
-  - component: {fileID: 7585872632805822179}
   m_Layer: 10
   m_Name: Radius
   m_TagString: Untagged
@@ -15064,15 +15063,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7585872632805822179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2893402842538776940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1574a208c40220c4e933dbb6d0345e40, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -19,7 +19,7 @@ namespace GameDevHQ.FileBase.Dual_Gatling_Gun
 	/// </summary>
 
 	[RequireComponent(typeof(AudioSource))] //Require Audio Source component
-	public class Dual_Gatling_Gun : MonoBehaviour
+	public class Dual_Gatling_Gun : AttackTower
 	{
 		[SerializeField]
 		private Transform[] _gunBarrel; //Reference to hold the gun barrel

@@ -7,6 +7,8 @@ public abstract class AttackTower : MonoBehaviour
 {
 	[SerializeField]
 	private MeshRenderer _radiusMesh;
+	[SerializeField]
+	private GameObject _rotatingPart;
 
 	private Queue<GameObject> _targets = new Queue<GameObject>();
 	private GameObject _currentTarget;
@@ -16,18 +18,17 @@ public abstract class AttackTower : MonoBehaviour
 	private void OnTriggerEnter(Collider other)
 	{
 		_targets.Enqueue(other.gameObject);
-		Debug.Log("Tower:: Targets in queue: " + _targets.Count);
-		Debug.Log(_targets.Peek().name);
 
 		if (_currentTarget == null)
 		{
-			_currentTarget = other.gameObject;
+			AcquireTarget();
 		}
 	}
 
 
 	private void OnTriggerStay(Collider other)
 	{
+		LookAtTarget();
 		Attack();
 	}
 
@@ -36,12 +37,8 @@ public abstract class AttackTower : MonoBehaviour
 	{
 		StopAttack();
 		_targets.Dequeue();
-		Debug.Log("Tower:: Target removed from queue");
 
-		if (_targets.Count > 0)
-		{
-			_currentTarget = _targets.Peek();
-		}
+		AcquireTarget();
 	}
 
 
@@ -49,4 +46,35 @@ public abstract class AttackTower : MonoBehaviour
 
 
 	public virtual void StopAttack() { }
+
+
+	private void AcquireTarget()
+	{
+		if (_targets.Count > 0)
+		{
+			_currentTarget = _targets.Peek();
+		}
+		else
+		{
+			_currentTarget = null;
+		}
+	}
+
+
+	private void LookAtTarget()
+	{
+		Quaternion lookRotation;
+
+		if (_targets.Count > 0)
+		{
+			Vector3 directionToFace = _currentTarget.transform.position - _rotatingPart.transform.position;
+			lookRotation = Quaternion.LookRotation(directionToFace);
+			Debug.DrawRay(transform.position, directionToFace, Color.green);
+		}
+		else
+		{
+			lookRotation = Quaternion.LookRotation(Vector3.zero);
+		}
+		_rotatingPart.transform.rotation = Quaternion.Slerp(_rotatingPart.transform.rotation, lookRotation, Time.deltaTime * 10);
+	}
 }
