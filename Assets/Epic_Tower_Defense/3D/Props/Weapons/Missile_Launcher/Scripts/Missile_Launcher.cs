@@ -10,7 +10,7 @@ using UnityEngine;
 
 namespace GameDevHQ.FileBase.Missile_Launcher
 {
-	public class Missile_Launcher : MonoBehaviour
+	public class Missile_Launcher : AttackTower
 	{
 		public enum MissileType
 		{
@@ -19,8 +19,6 @@ namespace GameDevHQ.FileBase.Missile_Launcher
 		}
 
 
-		[SerializeField]
-		private MeshRenderer _radius;
 		[SerializeField]
 		private GameObject _missilePrefab; //holds the missle gameobject to clone
 		[SerializeField]

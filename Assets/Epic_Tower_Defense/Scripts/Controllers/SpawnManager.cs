@@ -12,7 +12,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 	[SerializeField]
 	private GameObject[] _enemies;
 
-	private WaitForSeconds _spawnRate = new WaitForSeconds(2.5f);
+	private WaitForSeconds _spawnRate = new WaitForSeconds(4.5f);
 	private int _waveCount = 1;
 	[SerializeField]
 	private int waveMultiplier;

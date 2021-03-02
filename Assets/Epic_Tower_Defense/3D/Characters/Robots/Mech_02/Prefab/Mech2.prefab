@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4263589585629124}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4575733358035628}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LFJoint_3_Goal_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 4082074969387248}
   - component: {fileID: 33880528837997932}
   - component: {fileID: 23210097392440008}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body_Upper_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -155,7 +155,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4613284320158120}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -186,7 +186,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4545949684377264}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4502308709759502}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RFJoint_3_Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -247,7 +247,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4962230442758228}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RBJoint_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,7 +280,7 @@ GameObject:
   - component: {fileID: 4903330995077776}
   - component: {fileID: 33349400451383132}
   - component: {fileID: 23175200178606526}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Backtoe_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -361,7 +361,8 @@ GameObject:
   - component: {fileID: 1648348267}
   - component: {fileID: 3091765334721737276}
   - component: {fileID: 6544879020046657549}
-  m_Layer: 0
+  - component: {fileID: -590857981779557050}
+  m_Layer: 8
   m_Name: Mech2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -455,6 +456,22 @@ CapsuleCollider:
   m_Height: 10
   m_Direction: 1
   m_Center: {x: 0, y: 1.31, z: 0}
+--- !u!54 &-590857981779557050
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1079767520691416}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &1088550950582580
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +481,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4434231308257426}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -495,7 +512,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4627270668161740}
   - component: {fileID: 137019093656475240}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Upper_leg_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -579,7 +596,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4657582125968554}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_3_Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -611,7 +628,7 @@ GameObject:
   - component: {fileID: 4148652602149690}
   - component: {fileID: 33286535935879972}
   - component: {fileID: 23136937827937694}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -689,7 +706,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4969275629802070}
   - component: {fileID: 137431290600636250}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Upper_leg_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -773,7 +790,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4488475580693780}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RFJoint_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -803,7 +820,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4917889296151448}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -837,7 +854,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4334376046847338}
   - component: {fileID: 137478679101110054}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Upper_leg_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -922,7 +939,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4117438776530862}
   - component: {fileID: 137794365321337024}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shin_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1006,7 +1023,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4936918853236116}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RFJoint_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1039,7 +1056,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4892998652181824}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1073,7 +1090,7 @@ GameObject:
   - component: {fileID: 4581065539085122}
   - component: {fileID: 33706582831632680}
   - component: {fileID: 23263554049742022}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fronttoe_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1150,7 +1167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4300886406575160}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RB_Pole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1180,7 +1197,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4817374013937596}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_2_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1211,7 +1228,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4465551320046972}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RBJoint_5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1241,7 +1258,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4959479035777080}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RFJoint_3_Goal_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1273,7 +1290,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4072255940801386}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RFJoint_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1304,7 +1321,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4685240651309020}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_3_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1337,7 +1354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4801561089903000}
   - component: {fileID: 137242787443150572}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body_Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1423,7 +1440,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4017296006249136}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_5_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1453,7 +1470,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4302435207511184}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_4_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1484,7 +1501,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4341874242800028}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RBJoint_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1517,7 +1534,7 @@ GameObject:
   - component: {fileID: 4244705306473386}
   - component: {fileID: 33377661003639976}
   - component: {fileID: 23748035579291352}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Backtoe_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1594,7 +1611,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4370392862702554}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LFJoint_3_Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1624,7 +1641,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4340825004682686}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_4_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1657,7 +1674,7 @@ GameObject:
   - component: {fileID: 4745978108330110}
   - component: {fileID: 33104267513283654}
   - component: {fileID: 23100797030137250}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: L_Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1735,7 +1752,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4065971810772574}
   - component: {fileID: 137973849877058086}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Upper_leg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1819,7 +1836,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4525327442670632}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RFJoint_5_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1851,7 +1868,7 @@ GameObject:
   - component: {fileID: 4451345408185174}
   - component: {fileID: 33114091200249864}
   - component: {fileID: 23077509246743972}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Backtoe_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1928,7 +1945,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4874470990583262}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Joint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1970,7 +1987,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4785127784830394}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RFJoint_4_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2003,7 +2020,7 @@ GameObject:
   - component: {fileID: 4817108458218692}
   - component: {fileID: 33143626181902204}
   - component: {fileID: 23166918782391084}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Backtoe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2080,7 +2097,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4488599656533390}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RF_Pole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2112,7 +2129,7 @@ GameObject:
   - component: {fileID: 4543554557109350}
   - component: {fileID: 33914073680122830}
   - component: {fileID: 23061952457056156}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: R_Arm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2189,7 +2206,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4759649640321018}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LF_Pole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2220,7 +2237,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4815822806915026}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_5_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2250,7 +2267,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4925242556092232}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_5_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2281,7 +2298,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4050772951648148}
   - component: {fileID: 137304184835917936}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shin_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2366,7 +2383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4280775582442036}
   - component: {fileID: 137243562905613478}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shin_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2452,7 +2469,7 @@ GameObject:
   - component: {fileID: 4573767683348562}
   - component: {fileID: 33857494990021568}
   - component: {fileID: 23443251927682870}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: R_Missile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2529,7 +2546,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4496342761878720}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RB
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2560,7 +2577,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4157025405590450}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RF
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2591,7 +2608,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4609922320023156}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RBJoint_5_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2622,7 +2639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4789508378229998}
   - component: {fileID: 137697975393048234}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Shin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2706,7 +2723,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4700000104180150}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RFJoint_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2737,7 +2754,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4402084951812278}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_4_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2768,7 +2785,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4579514726448426}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RBJoint_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2801,7 +2818,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4743214724358792}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RBJoint_3_Goal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2833,7 +2850,7 @@ GameObject:
   - component: {fileID: 4405168491558210}
   - component: {fileID: 33570769939358208}
   - component: {fileID: 23625998288940492}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fronttoe_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2910,7 +2927,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4565646991163548}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_3_Goal_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2944,7 +2961,7 @@ GameObject:
   - component: {fileID: 4180339422449572}
   - component: {fileID: 33620981009357088}
   - component: {fileID: 23780147896568138}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fronttoe_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3021,7 +3038,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4985622873106788}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RBJoint_3_Goal_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3053,7 +3070,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4640363624755234}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mech_Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3097,7 +3114,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4474272251219984}
   - component: {fileID: 3992706755002019531}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Body_Upper
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3141,7 +3158,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4059433302742898}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LBJoint_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3174,7 +3191,7 @@ GameObject:
   - component: {fileID: 4716472424383406}
   - component: {fileID: 33087409427845486}
   - component: {fileID: 23433644253310908}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fronttoe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3251,7 +3268,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4701175160820082}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: LB_Pole
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3282,7 +3299,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4447358409765684}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: RBJoint_4_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3313,7 +3330,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2073136748236800086}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mech2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3346,7 +3363,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3149618306007060156}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Sky
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3376,7 +3393,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3994198593709738319}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Parent_Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}

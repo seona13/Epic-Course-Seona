@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3799594526454889035}
   - component: {fileID: 2794575589165742722}
   - component: {fileID: 5229693690633481999}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4768,7 +4768,7 @@ GameObject:
   - component: {fileID: 7587145559943341779}
   - component: {fileID: 7587145559943341778}
   - component: {fileID: 862133671255305933}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Build_Spot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
