@@ -860,6 +860,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radiusMesh: {fileID: 7798166376972093404}
   _rotatingPart: {fileID: 1365393933471856}
+  damage: 20
   _missilePrefab: {fileID: 1408549652012730, guid: 6f244204e60f45647b263f4edda01147,
     type: 3}
   _missileType: 0

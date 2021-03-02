@@ -47,18 +47,9 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 		}
 
 
-		// Method to rotate gun barrel 
-		void RotateBarrel()
+		public override void Attack(EnemyAI target)
 		{
-			_gunBarrel.transform.Rotate(Vector3.forward * Time.deltaTime * -500.0f); //rotate the gun barrel along the "forward" (z) axis at 500 meters per second
-
-		}
-
-
-		public override void Attack()
-		{
-			base.Attack();
-			RotateBarrel(); //Call the rotation function responsible for rotating our gun barrel
+			base.Attack(target);
 			Muzzle_Flash.SetActive(true); //enable muzzle effect particle effect
 			bulletCasings.Emit(1); //Emit the bullet casing particle effect  
 
@@ -67,6 +58,8 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 				_audioSource.Play(); //play audio clip attached to audio source
 				_startWeaponNoise = false; //set the start weapon noise value to false to prevent calling it again
 			}
+
+			target.TakeDamage(damage);
 		}
 
 

@@ -38,4 +38,10 @@ public class EnemyAI : MonoBehaviour
 		// Give enemy full health on spawn.
 		_currentHealth = _maxHealth;
 	}
+
+
+	public void TakeDamage(int amount)
+	{
+		_currentHealth -= amount;
+	}
 }

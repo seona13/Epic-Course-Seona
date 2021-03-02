@@ -9,15 +9,16 @@ public abstract class AttackTower : MonoBehaviour
 	private MeshRenderer _radiusMesh;
 	[SerializeField]
 	private GameObject _rotatingPart;
+	public int damage;
 
-	private Queue<GameObject> _targets = new Queue<GameObject>();
-	private GameObject _currentTarget;
+	private Queue<EnemyAI> _targets = new Queue<EnemyAI>();
+	private EnemyAI _currentTarget;
 
 
 
 	private void OnTriggerEnter(Collider other)
 	{
-		_targets.Enqueue(other.gameObject);
+		_targets.Enqueue(other.GetComponent<EnemyAI>());
 
 		if (_currentTarget == null)
 		{
@@ -29,7 +30,7 @@ public abstract class AttackTower : MonoBehaviour
 	private void OnTriggerStay(Collider other)
 	{
 		LookAtTarget();
-		Attack();
+		Attack(_currentTarget);
 	}
 
 
@@ -42,7 +43,7 @@ public abstract class AttackTower : MonoBehaviour
 	}
 
 
-	public virtual void Attack() { }
+	public virtual void Attack(EnemyAI target) { }
 
 
 	public virtual void StopAttack() { }
