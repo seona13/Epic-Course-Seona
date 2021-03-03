@@ -9,6 +9,8 @@ public class PoolManager : MonoSingleton<PoolManager>
 	[SerializeField]
 	private GameObject[] _enemies;
 	private List<GameObject> _enemyPool;
+	[SerializeField]
+	private GameObject _explosion;
 
 
 
@@ -22,6 +24,10 @@ public class PoolManager : MonoSingleton<PoolManager>
 	void Start()
 	{
 		GenerateEnemies(SpawnManager.Instance.GetWaveMultiplier());
+
+		_explosion = Instantiate(_explosion);
+		_explosion.transform.parent = _enemyContainer.transform;
+		_explosion.SetActive(false);
 	}
 
 
@@ -32,6 +38,7 @@ public class PoolManager : MonoSingleton<PoolManager>
 			GameObject enemy = Instantiate(_enemies[Random.Range(0, _enemies.Length)]);
 			enemy.transform.parent = _enemyContainer.transform;
 			enemy.SetActive(false);
+
 			_enemyPool.Add(enemy);
 		}
 		return _enemyPool;
@@ -54,5 +61,11 @@ public class PoolManager : MonoSingleton<PoolManager>
 		_enemyPool.Add(newEnemy);
 
 		return newEnemy;
+	}
+
+
+	public GameObject RequestExplosion()
+	{
+		return _explosion;
 	}
 }

@@ -16,6 +16,18 @@ public abstract class AttackTower : MonoBehaviour
 
 
 
+	private void OnEnable()
+	{
+		EnemyAI.onEnemyDie += EnemyDied;
+	}
+
+
+	private void OnDisable()
+	{
+		EnemyAI.onEnemyDie -= EnemyDied;
+	}
+
+
 	private void OnTriggerEnter(Collider other)
 	{
 		_targets.Enqueue(other.GetComponent<EnemyAI>());
@@ -36,10 +48,7 @@ public abstract class AttackTower : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-		StopAttack();
-		_targets.Dequeue();
-
-		AcquireTarget();
+		EnemyDied();
 	}
 
 
@@ -70,12 +79,20 @@ public abstract class AttackTower : MonoBehaviour
 		{
 			Vector3 directionToFace = _currentTarget.transform.position - _rotatingPart.transform.position;
 			lookRotation = Quaternion.LookRotation(directionToFace);
-			Debug.DrawRay(transform.position, directionToFace, Color.green);
 		}
 		else
 		{
 			lookRotation = Quaternion.LookRotation(Vector3.zero);
 		}
 		_rotatingPart.transform.rotation = Quaternion.Slerp(_rotatingPart.transform.rotation, lookRotation, Time.deltaTime * 10);
+	}
+
+
+	private void EnemyDied()
+	{
+		StopAttack();
+		_targets.Dequeue();
+
+		AcquireTarget();
 	}
 }

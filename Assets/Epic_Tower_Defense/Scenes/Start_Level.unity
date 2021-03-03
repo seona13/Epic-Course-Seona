@@ -8573,6 +8573,8 @@ MonoBehaviour:
   _enemies:
   - {fileID: 1637921026644932, guid: b6f9eb08e9dcb484fbccc49d65f561ab, type: 3}
   - {fileID: 1079767520691416, guid: fed6fd85e4a83418485118c22ed9f184, type: 3}
+  _explosion: {fileID: 7571110843994879356, guid: e1df2e50500ab0146b9b8446263eddbb,
+    type: 3}
 --- !u!4 &1479457727
 Transform:
   m_ObjectHideFlags: 0

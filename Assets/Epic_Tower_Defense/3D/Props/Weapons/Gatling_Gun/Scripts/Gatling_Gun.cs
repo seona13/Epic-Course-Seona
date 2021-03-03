@@ -49,17 +49,20 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
 		public override void Attack(EnemyAI target)
 		{
-			base.Attack(target);
-			Muzzle_Flash.SetActive(true); //enable muzzle effect particle effect
-			bulletCasings.Emit(1); //Emit the bullet casing particle effect  
-
-			if (_startWeaponNoise == true) //checking if we need to start the gun sound
+			if (target != null)
 			{
-				_audioSource.Play(); //play audio clip attached to audio source
-				_startWeaponNoise = false; //set the start weapon noise value to false to prevent calling it again
-			}
+				base.Attack(target);
+				Muzzle_Flash.SetActive(true); //enable muzzle effect particle effect
+				bulletCasings.Emit(1); //Emit the bullet casing particle effect  
 
-			target.TakeDamage(damage);
+				if (_startWeaponNoise == true) //checking if we need to start the gun sound
+				{
+					_audioSource.Play(); //play audio clip attached to audio source
+					_startWeaponNoise = false; //set the start weapon noise value to false to prevent calling it again
+				}
+
+				target.TakeDamage(damage);
+			}
 		}
 
 
