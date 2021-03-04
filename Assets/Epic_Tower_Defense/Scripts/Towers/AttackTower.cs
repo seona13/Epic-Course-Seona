@@ -77,7 +77,9 @@ public abstract class AttackTower : MonoBehaviour
 
 		if (_targets.Count > 0)
 		{
+			Vector3 offset = new Vector3(0, 1.3f, 0);
 			Vector3 directionToFace = _currentTarget.transform.position - _rotatingPart.transform.position;
+			directionToFace += offset;
 			lookRotation = Quaternion.LookRotation(directionToFace);
 		}
 		else
