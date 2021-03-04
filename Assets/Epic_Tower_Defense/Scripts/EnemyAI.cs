@@ -80,12 +80,12 @@ public class EnemyAI : MonoBehaviour
 		_agent.enabled = false;
 		GameObject explosion = PoolManager.Instance.RequestExplosion();
 		explosion.transform.position = transform.position;
-		explosion.SetActive(true);
 		_anim.SetBool("isDead", true);
 
 		onEnemyDie?.Invoke();
 
 		yield return _pauseBeforeCleanup;
 		SpawnManager.Instance.DespawnEnemy(this);
+		explosion.SetActive(false);
 	}
 }

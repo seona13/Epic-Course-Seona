@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
 public class PoolManager : MonoSingleton<PoolManager>
 {
 	[SerializeField]
-	private GameObject _enemyContainer;
+	private Transform _enemyContainer;
 	[SerializeField]
 	private GameObject[] _enemies;
 	private List<GameObject> _enemyPool;
+
+	[Space(10)]
+
+	[SerializeField]
+	private Transform _explosionContainer;
 	[SerializeField]
 	private GameObject _explosion;
+	private List<GameObject> _explosionPool;
 
 
 
@@ -18,16 +25,14 @@ public class PoolManager : MonoSingleton<PoolManager>
 	{
 		base.Init();
 		_enemyPool = new List<GameObject>();
+		_explosionPool = new List<GameObject>();
 	}
 
 
 	void Start()
 	{
 		GenerateEnemies(SpawnManager.Instance.GetWaveMultiplier());
-
-		_explosion = Instantiate(_explosion);
-		_explosion.transform.parent = _enemyContainer.transform;
-		_explosion.SetActive(false);
+		GenerateExplosions(SpawnManager.Instance.GetWaveMultiplier());
 	}
 
 
@@ -36,7 +41,7 @@ public class PoolManager : MonoSingleton<PoolManager>
 		for (int i = 0; i < amount; i++)
 		{
 			GameObject enemy = Instantiate(_enemies[Random.Range(0, _enemies.Length)]);
-			enemy.transform.parent = _enemyContainer.transform;
+			enemy.transform.parent = _enemyContainer;
 			enemy.SetActive(false);
 
 			_enemyPool.Add(enemy);
@@ -57,15 +62,42 @@ public class PoolManager : MonoSingleton<PoolManager>
 		}
 
 		GameObject newEnemy = Instantiate(_enemies[Random.Range(0, _enemies.Length)]);
-		newEnemy.transform.parent = _enemyContainer.transform;
+		newEnemy.transform.parent = _enemyContainer;
 		_enemyPool.Add(newEnemy);
 
 		return newEnemy;
 	}
 
 
+	List<GameObject> GenerateExplosions(int amount)
+	{
+		for (int i = 0; i < amount; i++)
+		{
+			GameObject explosion = Instantiate(_explosion);
+			explosion.transform.parent = _explosionContainer;
+			explosion.SetActive(false);
+
+			_explosionPool.Add(explosion);
+		}
+		return _explosionPool;
+	}
+
+
 	public GameObject RequestExplosion()
 	{
-		return _explosion;
+		foreach (GameObject explosion in _explosionPool)
+		{
+			if (explosion.activeInHierarchy == false)
+			{
+				explosion.SetActive(true);
+				return explosion;
+			}
+		}
+
+		GameObject newExplosion = Instantiate(_explosion);
+		newExplosion.transform.parent = _explosionContainer;
+		_explosionPool.Add(newExplosion);
+
+		return newExplosion;
 	}
 }
