@@ -11,7 +11,7 @@ public abstract class AttackTower : MonoBehaviour
 	private GameObject _rotatingPart;
 	public int damage;
 
-	private Queue<EnemyAI> _targets = new Queue<EnemyAI>();
+	private List<EnemyAI> _targets = new List<EnemyAI>();
 	private EnemyAI _currentTarget;
 
 
@@ -30,7 +30,7 @@ public abstract class AttackTower : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		_targets.Enqueue(other.GetComponent<EnemyAI>());
+		_targets.Add(other.GetComponent<EnemyAI>());
 
 		if (_currentTarget == null)
 		{
@@ -48,7 +48,7 @@ public abstract class AttackTower : MonoBehaviour
 
 	private void OnTriggerExit(Collider other)
 	{
-		EnemyDied();
+		EnemyDied(other.GetComponent<EnemyAI>());
 	}
 
 
@@ -62,7 +62,7 @@ public abstract class AttackTower : MonoBehaviour
 	{
 		if (_targets.Count > 0)
 		{
-			_currentTarget = _targets.Peek();
+			_currentTarget = _targets[0];
 		}
 		else
 		{
@@ -90,11 +90,17 @@ public abstract class AttackTower : MonoBehaviour
 	}
 
 
-	private void EnemyDied()
+	private void EnemyDied(EnemyAI enemy)
 	{
-		StopAttack();
-		_targets.Dequeue();
-
-		AcquireTarget();
+		if (_currentTarget == enemy)
+		{
+			StopAttack();
+			_targets.Remove(_currentTarget);
+			AcquireTarget();
+		}
+		else
+		{
+			_targets.Remove(enemy);
+		}
 	}
 }
