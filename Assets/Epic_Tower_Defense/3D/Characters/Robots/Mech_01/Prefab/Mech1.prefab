@@ -1541,9 +1541,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 0
-  _maxHealth: 100
+  _maxHealth: 200
   _currentHealth: 0
-  _killValue: 50
+  _killValue: 20
   _isDead: 0
 --- !u!195 &1343467180
 NavMeshAgent:

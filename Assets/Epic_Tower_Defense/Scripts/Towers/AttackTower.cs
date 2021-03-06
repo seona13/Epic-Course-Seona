@@ -1,18 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 
 public abstract class AttackTower : MonoBehaviour
 {
+	public static event Action<GameObject, int> onCallForDamage;
+
 	[SerializeField]
 	private MeshRenderer _radiusMesh;
 	[SerializeField]
 	private GameObject _rotatingPart;
 	public int damage;
 
-	private List<EnemyAI> _targets = new List<EnemyAI>();
-	private EnemyAI _currentTarget;
+	private List<GameObject> _targets = new List<GameObject>();
+	private GameObject _currentTarget;
 
 
 
@@ -30,11 +34,14 @@ public abstract class AttackTower : MonoBehaviour
 
 	private void OnTriggerEnter(Collider other)
 	{
-		_targets.Add(other.GetComponent<EnemyAI>());
-
-		if (_currentTarget == null)
+		if (other.CompareTag("Enemy"))
 		{
-			AcquireTarget();
+			_targets.Add(other.gameObject);
+
+			if (_currentTarget == null)
+			{
+				AcquireTarget();
+			}
 		}
 	}
 
@@ -43,16 +50,20 @@ public abstract class AttackTower : MonoBehaviour
 	{
 		LookAtTarget();
 		Attack(_currentTarget);
+		CallForDamage();
 	}
 
 
 	private void OnTriggerExit(Collider other)
 	{
-		EnemyDied(other.GetComponent<EnemyAI>());
+		if (other.CompareTag("Enemy"))
+		{
+			EnemyDied(other.gameObject);
+		}
 	}
 
 
-	public virtual void Attack(EnemyAI target) { }
+	public virtual void Attack(GameObject target) { }
 
 
 	public virtual void StopAttack() { }
@@ -62,7 +73,7 @@ public abstract class AttackTower : MonoBehaviour
 	{
 		if (_targets.Count > 0)
 		{
-			_currentTarget = _targets[0];
+			_currentTarget = _targets.First();
 		}
 		else
 		{
@@ -90,17 +101,26 @@ public abstract class AttackTower : MonoBehaviour
 	}
 
 
-	private void EnemyDied(EnemyAI enemy)
+	private void CallForDamage()
 	{
+		if (_currentTarget != null)
+		{
+			onCallForDamage?.Invoke(_currentTarget, damage);
+		}
+	}
+
+
+	private void EnemyDied(GameObject enemy)
+	{
+		if (_targets.Contains(enemy))
+		{
+			_targets.Remove(enemy);
+		}
+
 		if (_currentTarget == enemy)
 		{
 			StopAttack();
-			_targets.Remove(_currentTarget);
 			AcquireTarget();
-		}
-		else
-		{
-			_targets.Remove(enemy);
 		}
 	}
 }

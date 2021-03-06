@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _type: 1
-  _maxHealth: 100
+  _maxHealth: 500
   _currentHealth: 0
   _killValue: 50
   _isDead: 0

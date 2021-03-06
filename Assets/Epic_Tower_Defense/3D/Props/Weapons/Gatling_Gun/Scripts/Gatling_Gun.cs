@@ -47,7 +47,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 		}
 
 
-		public override void Attack(EnemyAI target)
+		public override void Attack(GameObject target)
 		{
 			if (target != null)
 			{
@@ -60,8 +60,6 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 					_audioSource.Play(); //play audio clip attached to audio source
 					_startWeaponNoise = false; //set the start weapon noise value to false to prevent calling it again
 				}
-
-				target.TakeDamage(damage);
 			}
 		}
 

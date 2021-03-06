@@ -9,7 +9,7 @@ public enum EnemyType { WALKER, TANK }
 
 public class EnemyAI : MonoBehaviour
 {
-	public static Action<EnemyAI> onEnemyDie;
+	public static Action<GameObject> onEnemyDie;
 
 	private NavMeshAgent _agent;
 	private Animator _anim;
@@ -47,6 +47,8 @@ public class EnemyAI : MonoBehaviour
 
 	void OnEnable()
 	{
+		AttackTower.onCallForDamage += CheckIfTarget;
+
 		_agent.enabled = true;
 		_agent.Warp(SpawnManager.Instance.GetInlet().position);
 		_agent.SetDestination(SpawnManager.Instance.GetOutlet().transform.position);
@@ -57,6 +59,21 @@ public class EnemyAI : MonoBehaviour
 		// Make sure enemy is not in "dead" state
 		_anim.SetBool("isDead", false);
 		_isDead = false;
+	}
+
+
+	private void OnDisable()
+	{
+		AttackTower.onCallForDamage -= CheckIfTarget;
+	}
+
+
+	private void CheckIfTarget(GameObject target, int amount)
+	{
+		if (gameObject == target)
+		{
+			TakeDamage(amount);
+		}
 	}
 
 
@@ -82,7 +99,7 @@ public class EnemyAI : MonoBehaviour
 		explosion.transform.position = transform.position;
 		_anim.SetBool("isDead", true);
 
-		onEnemyDie?.Invoke(this);
+		onEnemyDie?.Invoke(gameObject);
 
 		yield return _pauseBeforeCleanup;
 		SpawnManager.Instance.DespawnEnemy(this);
