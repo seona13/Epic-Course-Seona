@@ -61,36 +61,39 @@ namespace GameDevHQ.FileBase.Missile_Launcher.Missile
 
 		void FixedUpdate()
 		{
-			if (_fuseOut == false) //check if fuseOut is false
-				return;
-
-			if (_launched == true) //check if launched is true
+			if (_target != null)
 			{
-				_rigidbody.AddForce(transform.forward * _launchSpeed); //add force to the rocket in the forward direction
+				if (_fuseOut == false) //check if fuseOut is false
+					return;
 
-				if (Time.time > _initialLaunchTime + _fuseDelay) //check if the initial launch + fuse delay has passed
+				if (_launched == true) //check if launched is true
 				{
-					_launched = false; //launched bool goes false
-					_thrust = true; //thrust bool goes true
+					_rigidbody.AddForce(transform.forward * _launchSpeed); //add force to the rocket in the forward direction
+
+					if (Time.time > _initialLaunchTime + _fuseDelay) //check if the initial launch + fuse delay has passed
+					{
+						_launched = false; //launched bool goes false
+						_thrust = true; //thrust bool goes true
+					}
 				}
-			}
 
-			if (_thrust == true) //if thrust is true
-			{
-				_rigidbody.useGravity = true; //enable gravity 
-				_rigidbody.velocity = transform.forward * _power; //set velocity multiplied by the power variable
-				_thrust = false; //set thrust bool to false
-				_trackRotation = true; //track rotation bool set to true
-			}
+				if (_thrust == true) //if thrust is true
+				{
+					_rigidbody.useGravity = true; //enable gravity 
+					_rigidbody.velocity = transform.forward * _power; //set velocity multiplied by the power variable
+					_thrust = false; //set thrust bool to false
+					_trackRotation = true; //track rotation bool set to true
+				}
 
-			if (_trackRotation == true) //check track rotation bool
-			{
-				Vector3 direction = _target.position - transform.position; //calculate direciton for rocket to face
-				direction.Normalize(); //set the magnitude of the vector to 1
-				Vector3 turnAmount = Vector3.Cross(transform.forward, direction); //using cross product, we multiply our forward vector of the rocket by the direction vector, to create a perpendular vector, which specifies the turn amount
+				if (_trackRotation == true) //check track rotation bool
+				{
+					Vector3 direction = _target.position - transform.position; //calculate direciton for rocket to face
+					direction.Normalize(); //set the magnitude of the vector to 1
+					Vector3 turnAmount = Vector3.Cross(transform.forward, direction); //using cross product, we multiply our forward vector of the rocket by the direction vector, to create a perpendular vector, which specifies the turn amount
 
-				_rigidbody.angularVelocity = turnAmount * _power; //apply angular velocity
-				_rigidbody.velocity = transform.forward * _power; //apply forward velocity
+					_rigidbody.angularVelocity = turnAmount * _power; //apply angular velocity
+					_rigidbody.velocity = transform.forward * _power; //apply forward velocity
+				}
 			}
 		}
 

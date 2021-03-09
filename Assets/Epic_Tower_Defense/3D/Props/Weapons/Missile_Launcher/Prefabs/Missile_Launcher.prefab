@@ -862,18 +862,17 @@ MonoBehaviour:
   _towerType: 1
   _radiusMesh: {fileID: 7798166376972093404}
   _rotatingPart: {fileID: 1365393933471856}
-  damage: 20
+  _damage: 20
   _fireRate: 1
   _missilePrefab: {fileID: 1408549652012730, guid: 6f244204e60f45647b263f4edda01147,
     type: 3}
-  _missileType: 1
-  _misslePositions:
-  - {fileID: 1873951908610878}
-  - {fileID: 1139054131123058}
-  - {fileID: 1813217845799934}
+  _missilePositions:
   - {fileID: 1605856496139196}
-  - {fileID: 1049361331577042}
+  - {fileID: 1813217845799934}
+  - {fileID: 1873951908610878}
   - {fileID: 1441185981006382}
+  - {fileID: 1139054131123058}
+  - {fileID: 1049361331577042}
   _launchSpeed: 10
   _power: 20
   _fuseDelay: 0

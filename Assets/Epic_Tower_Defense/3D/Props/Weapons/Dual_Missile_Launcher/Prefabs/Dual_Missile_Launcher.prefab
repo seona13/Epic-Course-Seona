@@ -1028,7 +1028,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4992100544793712}
-  - component: {fileID: 114922831511488930}
+  - component: {fileID: 7256116051103440338}
   m_Layer: 0
   m_Name: Dual_Missile_Launcher
   m_TagString: Untagged
@@ -1052,7 +1052,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114922831511488930
+--- !u!114 &7256116051103440338
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1061,28 +1061,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 1815566672332072}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 441abd9413f41a943bfae1f9d5de828d, type: 3}
+  m_Script: {fileID: 11500000, guid: f37f75a662e08584192823355ae4ac73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _towerType: 1
   _radiusMesh: {fileID: 4965309354283696299}
   _rotatingPart: {fileID: 1319434493914340}
-  _missilePrefab: {fileID: 1909211218276452, guid: 5c6948683bd97124a91ca4af6a7ed8b4,
+  _damage: 20
+  _fireRate: 0.5
+  _missilePrefab: {fileID: 1408549652012730, guid: 6f244204e60f45647b263f4edda01147,
     type: 3}
-  _misslePositionsLeft:
-  - {fileID: 1568099262073704}
-  - {fileID: 1891850004438186}
-  - {fileID: 1004252436174350}
-  - {fileID: 1897688784281268}
+  _missilePositions:
   - {fileID: 1239570504970028}
   - {fileID: 1678957458711370}
-  _misslePositionsRight:
-  - {fileID: 1995317900301310}
-  - {fileID: 1157582731368434}
-  - {fileID: 1086171424697458}
-  - {fileID: 1255499207706544}
+  - {fileID: 1004252436174350}
+  - {fileID: 1897688784281268}
+  - {fileID: 1891850004438186}
+  - {fileID: 1568099262073704}
   - {fileID: 1441933424927852}
+  - {fileID: 1255499207706544}
   - {fileID: 1770064571432884}
-  _fireDelay: 1
+  - {fileID: 1086171424697458}
+  - {fileID: 1157582731368434}
+  - {fileID: 1995317900301310}
   _launchSpeed: 10
   _power: 20
   _fuseDelay: 0

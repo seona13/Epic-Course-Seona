@@ -22,10 +22,9 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 	public class Gatling_Gun : AttackTower
 	{
 		[SerializeField]
-		private Transform _gunBarrel; //Reference to hold the gun barrel
-		public GameObject Muzzle_Flash; //reference to the muzzle flash effect to play when firing
-		public ParticleSystem bulletCasings; //reference to the bullet casing effect to play when firing
-		public AudioClip fireSound; //Reference to the audio clip
+		private Transform[] _gunBarrel; //Reference to hold the gun barrel
+		public GameObject[] Muzzle_Flash; //reference to the muzzle flash effect to play when firing
+		public ParticleSystem[] bulletCasings; //reference to the bullet casing effect to play when firing
 
 		private AudioSource _audioSource; //reference to the audio source component
 		private bool _startWeaponNoise = true;
@@ -36,11 +35,7 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 
 		void Start()
 		{
-			Muzzle_Flash.SetActive(false); //setting the initial state of the muzzle flash effect to off
 			_audioSource = GetComponent<AudioSource>(); //ssign the Audio Source to the reference variable
-			_audioSource.playOnAwake = false; //disabling play on awake
-			_audioSource.loop = true; //making sure our sound effect loops
-			_audioSource.clip = fireSound; //assign the clip to play
 
 			_fireDelay = new WaitForSeconds(_fireRate);
 		}
@@ -50,8 +45,11 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 		{
 			if (_currentTarget != null)
 			{
-				_gunBarrel.transform.Rotate(Vector3.forward * Time.deltaTime * -500f);
-				bulletCasings.Emit(1); //Emit the bullet casing particle effect  
+				for (int i = 0; i < _gunBarrel.Length; i++)
+				{
+					_gunBarrel[i].transform.Rotate(Vector3.forward * Time.deltaTime * -500f);
+					bulletCasings[i].Emit(1); //Emit the bullet casing particle effect  
+				}
 			}
 		}
 
@@ -61,7 +59,10 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 			if (_currentTarget != null)
 			{
 				base.Attack();
-				Muzzle_Flash.SetActive(true); //enable muzzle effect particle effect
+				for (int i = 0; i < Muzzle_Flash.Length; i++)
+				{
+					Muzzle_Flash[i].SetActive(true); //enable muzzle effect particle effect
+				}
 
 				_audioSource.Play(); //play audio clip attached to audio source
 
@@ -73,7 +74,10 @@ namespace GameDevHQ.FileBase.Gatling_Gun
 		public override void StopAttack()
 		{
 			base.StopAttack();
-			Muzzle_Flash.SetActive(false); //turn off muzzle flash particle effect
+			for (int i = 0; i < Muzzle_Flash.Length; i++)
+			{
+				Muzzle_Flash[i].SetActive(false); //turn off muzzle flash particle effect
+			}
 			_audioSource.Stop(); //stop the sound effect from playing
 			_startWeaponNoise = true; //set the start weapon noise value to true
 			StopCoroutine(_damageRoutine);
