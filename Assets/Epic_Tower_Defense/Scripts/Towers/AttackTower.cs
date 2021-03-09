@@ -5,18 +5,26 @@ using System.Linq;
 using UnityEngine;
 
 
+public enum TowerType { GATLING, MISSILE };
+
+
 public abstract class AttackTower : MonoBehaviour
 {
 	public static event Action<GameObject, int> onCallForDamage;
 
 	[SerializeField]
-	private MeshRenderer _radiusMesh;
+	protected TowerType _towerType;
 	[SerializeField]
-	private GameObject _rotatingPart;
-	public int damage;
+	protected MeshRenderer _radiusMesh;
+	[SerializeField]
+	protected GameObject _rotatingPart;
+	[SerializeField]
+	protected int _damage;
+	[SerializeField]
+	protected float _fireRate = 0.5f;
 
-	private List<GameObject> _targets = new List<GameObject>();
-	private GameObject _currentTarget;
+	protected List<GameObject> _targets = new List<GameObject>();
+	protected GameObject _currentTarget;
 
 
 
@@ -41,6 +49,7 @@ public abstract class AttackTower : MonoBehaviour
 			if (_currentTarget == null)
 			{
 				AcquireTarget();
+				Attack();
 			}
 		}
 	}
@@ -48,9 +57,10 @@ public abstract class AttackTower : MonoBehaviour
 
 	private void OnTriggerStay(Collider other)
 	{
-		LookAtTarget();
-		Attack(_currentTarget);
-		CallForDamage();
+		if (_currentTarget != null)
+		{
+			LookAtTarget();
+		}
 	}
 
 
@@ -63,7 +73,7 @@ public abstract class AttackTower : MonoBehaviour
 	}
 
 
-	public virtual void Attack(GameObject target) { }
+	public virtual void Attack() { }
 
 
 	public virtual void StopAttack() { }
@@ -78,6 +88,7 @@ public abstract class AttackTower : MonoBehaviour
 		else
 		{
 			_currentTarget = null;
+			StopAttack();
 		}
 	}
 
@@ -101,12 +112,9 @@ public abstract class AttackTower : MonoBehaviour
 	}
 
 
-	private void CallForDamage()
+	protected void CallForDamage()
 	{
-		if (_currentTarget != null)
-		{
-			onCallForDamage?.Invoke(_currentTarget, damage);
-		}
+		onCallForDamage?.Invoke(_currentTarget, _damage);
 	}
 
 
@@ -119,7 +127,6 @@ public abstract class AttackTower : MonoBehaviour
 
 		if (_currentTarget == enemy)
 		{
-			StopAttack();
 			AcquireTarget();
 		}
 	}

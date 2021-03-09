@@ -48,6 +48,7 @@ public class EnemyAI : MonoBehaviour
 	void OnEnable()
 	{
 		AttackTower.onCallForDamage += CheckIfTarget;
+		GameDevHQ.FileBase.Missile_Launcher.Missile.Missile.onCallForDamage += CheckIfTarget;
 
 		_agent.enabled = true;
 		_agent.Warp(SpawnManager.Instance.GetInlet().position);
@@ -65,6 +66,7 @@ public class EnemyAI : MonoBehaviour
 	private void OnDisable()
 	{
 		AttackTower.onCallForDamage -= CheckIfTarget;
+		GameDevHQ.FileBase.Missile_Launcher.Missile.Missile.onCallForDamage -= CheckIfTarget;
 	}
 
 

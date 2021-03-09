@@ -4204,6 +4204,7 @@ MonoBehaviour:
   _panSpeed: 10
   _edgeBuffer: 0.05
   _edgeScrolling: 1
+  _timeScale: 0.5
 --- !u!1001 &755527235
 PrefabInstance:
   m_ObjectHideFlags: 0
