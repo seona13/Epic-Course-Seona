@@ -2056,6 +2056,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 327950056}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &331505757
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 331505759}
+  - component: {fileID: 331505758}
+  m_Layer: 0
+  m_Name: Player_Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &331505758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331505757}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9605fd1ab88e20040b9f264a5a5dd279, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  warFund: 500
+--- !u!4 &331505759
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 331505757}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 726.31494, y: 49.194107, z: 4.0689163}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &336968388
 GameObject:
   m_ObjectHideFlags: 0
@@ -2232,7 +2276,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &350660923
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3531,6 +3575,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 592720672}
+  - component: {fileID: 592720673}
   - component: {fileID: 592720671}
   - component: {fileID: 592720670}
   - component: {fileID: 592720669}
@@ -3589,7 +3634,7 @@ Canvas:
   m_GameObject: {fileID: 592720668}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 1
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -3629,6 +3674,26 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &592720673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 592720668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 155dcbbf7554a6449ad35209531e3008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _warFundDisplay: {fileID: 2109062355}
+  _towers:
+  - {fileID: 11400000, guid: 8ccdb8bbf98b1d24aa6b82df5fe17ede, type: 2}
+  - {fileID: 11400000, guid: c34c639e182ee7c468793155283bd204, type: 2}
+  - {fileID: 11400000, guid: c98eb953a668bcf49bb91aa9d79e8bf8, type: 2}
+  - {fileID: 11400000, guid: 33c4b2f3dc7b3884aa6a6f9c127ba5f4, type: 2}
+  _buildGatlingGunButton: {fileID: 150529102}
+  _buildMissileLauncherButton: {fileID: 1416097952}
 --- !u!1001 &595690249
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4309,7 +4374,6 @@ MonoBehaviour:
   _towers:
   - {fileID: 11400000, guid: 8ccdb8bbf98b1d24aa6b82df5fe17ede, type: 2}
   - {fileID: 11400000, guid: c34c639e182ee7c468793155283bd204, type: 2}
-  _warFund: 500
   _availableRadius: {r: 0, g: 1, b: 0, a: 0.39215687}
   _unavailableRadius: {r: 1, g: 0, b: 0, a: 0.39215687}
 --- !u!4 &771707168
@@ -10403,7 +10467,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1706649506
 RectTransform:
   m_ObjectHideFlags: 0

@@ -22,8 +22,6 @@ public class TowerManager : MonoBehaviour
 
 	private int _towerType;
 	private Vector3 _plotPos;
-	[SerializeField]
-	private int _warFund = 500;
 
 	[SerializeField]
 	private Color _availableRadius;
@@ -36,6 +34,7 @@ public class TowerManager : MonoBehaviour
 	{
 		BuildSpot.onOpenPlot += CheckValidPlacement;
 		BuildSpot.onTryPlaceTower += TryPlaceTower;
+		UIManager.onBuildButtonClicked += OnBuildButtonClicked;
 	}
 
 
@@ -52,21 +51,6 @@ public class TowerManager : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetKeyDown(KeyCode.Alpha1))
-		{
-			PlacementModeChange(true);
-			DeactivatePrototype();
-			TowerPlacementMode(0);
-			_radius = _prototypePool[_towerType].GetComponentInChildren<Radius>().GetComponent<MeshRenderer>();
-		}
-		if (Input.GetKeyDown(KeyCode.Alpha2))
-		{
-			PlacementModeChange(true);
-			DeactivatePrototype();
-			TowerPlacementMode(1);
-			_radius = _prototypePool[_towerType].GetComponentInChildren<Radius>().GetComponent<MeshRenderer>();
-		}
-
 		if (Input.GetMouseButtonDown(1))
 		{
 			PlacementModeChange(false);
@@ -81,6 +65,16 @@ public class TowerManager : MonoBehaviour
 	{
 		BuildSpot.onOpenPlot -= CheckValidPlacement;
 		BuildSpot.onTryPlaceTower -= TryPlaceTower;
+		UIManager.onBuildButtonClicked -= OnBuildButtonClicked;
+	}
+
+
+	void OnBuildButtonClicked(int towerType)
+	{
+		PlacementModeChange(true);
+		DeactivatePrototype();
+		TowerPlacementMode(towerType);
+		_radius = _prototypePool[_towerType].GetComponentInChildren<Radius>().GetComponent<MeshRenderer>();
 	}
 
 
@@ -96,10 +90,7 @@ public class TowerManager : MonoBehaviour
 	void PlacementModeChange(bool status)
 	{
 		_towerPlacementMode = status;
-		if (onPlacementModeChange != null)
-		{
-			onPlacementModeChange(status);
-		}
+		onPlacementModeChange?.Invoke(status);
 	}
 
 
@@ -150,14 +141,11 @@ public class TowerManager : MonoBehaviour
 	void TryPlaceTower()
 	{
 		int towerCost = _towers[_towerType].buyFor;
-		if (_warFund >= towerCost)
+		if (PlayerManager.Instance.warFund >= towerCost)
 		{
 			Instantiate(_towers[_towerType].prefab, _plotPos, Quaternion.identity, _towerContainer);
-			_warFund -= towerCost;
-			if (onTowerPlaced != null)
-			{
-				onTowerPlaced(_plotPos);
-			}
+			PlayerManager.Instance.OnWarFundsChanged(-towerCost);
+			onTowerPlaced?.Invoke(_plotPos);
 		}
 	}
 }
