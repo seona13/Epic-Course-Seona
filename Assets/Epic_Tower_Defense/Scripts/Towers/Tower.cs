@@ -10,6 +10,7 @@ public class Tower : ScriptableObject
 	public string towerName;
 	public GameObject prefab;
 	public GameObject prototypePrefab;
+	public Tower upgradesTo;
 	public int buyFor;
 	public int sellFor;
 }

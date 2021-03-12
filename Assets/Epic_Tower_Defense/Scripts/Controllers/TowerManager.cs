@@ -7,15 +7,14 @@ using UnityEngine;
 public class TowerManager : MonoBehaviour
 {
 	public static event Action<bool> onPlacementModeChange;
-	public static event Action<Vector3> onTowerPlaced;
+	public static event Action<Vector3, Tower> onTowerPlaced;
 
 	private bool _towerPlacementMode = false;
 	private bool _canPlaceTower = false;
 
 	[SerializeField]
-	private Transform _towerContainer;
-	[SerializeField]
-	private Tower[] _towers;
+	private Database _assetDatabase;
+
 	private GameObject[] _prototypePool;
 	private GameObject _activePrototype;
 	private MeshRenderer _radius;
@@ -40,11 +39,14 @@ public class TowerManager : MonoBehaviour
 
 	void Start()
 	{
-		_prototypePool = new GameObject[_towers.Length];
-		for (int i = 0; i < _towers.Length; i++)
+		_prototypePool = new GameObject[_assetDatabase.towers.Length];
+		for (int i = 0; i < _assetDatabase.towers.Length; i++)
 		{
-			_prototypePool[i] = Instantiate(_towers[i].prototypePrefab, transform);
-			_prototypePool[i].SetActive(false);
+			if (_assetDatabase.towers[i].prototypePrefab != null)
+			{
+				_prototypePool[i] = Instantiate(_assetDatabase.towers[i].prototypePrefab, transform);
+				_prototypePool[i].SetActive(false);
+			}
 		}
 	}
 
@@ -140,12 +142,12 @@ public class TowerManager : MonoBehaviour
 
 	void TryPlaceTower()
 	{
-		int towerCost = _towers[_towerType].buyFor;
+		int towerCost = _assetDatabase.towers[_towerType].buyFor;
 		if (PlayerManager.Instance.warFund >= towerCost)
 		{
-			Instantiate(_towers[_towerType].prefab, _plotPos, Quaternion.identity, _towerContainer);
-			PlayerManager.Instance.OnWarFundsChanged(-towerCost);
-			onTowerPlaced?.Invoke(_plotPos);
+			GameObject tower = PoolManager.Instance.RequestTower(_towerType);
+			tower.transform.position = _plotPos;
+			onTowerPlaced?.Invoke(_plotPos, _assetDatabase.towers[_towerType]);
 		}
 	}
 }

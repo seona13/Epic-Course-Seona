@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85c7cf67bef856144a05f930bb8817d3, type: 3}
-  m_Name: Missile Launcher
+  m_Name: GatlingGunDual
   m_EditorClassIdentifier: 
-  towerType: 1
-  towerName: Missile Launcher
-  prefab: {fileID: 1821146363788296, guid: 8d6b1413bfb162c44899f390a9d98c83, type: 3}
-  prototypePrefab: {fileID: 1821146363788296, guid: d797f1ed1ef83a249aa8a8a7176a3c76,
-    type: 3}
+  towerType: 2
+  towerName: Dual Gatling Gun
+  prefab: {fileID: 1873819670802014, guid: 4565034b2cea2354aa1991c60bc1cd44, type: 3}
+  prototypePrefab: {fileID: 0}
+  upgradesTo: {fileID: 0}
   buyFor: 300
-  sellFor: 150
+  sellFor: 200

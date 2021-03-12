@@ -68,7 +68,7 @@ public abstract class AttackTower : MonoBehaviour
 	{
 		if (other.CompareTag("Enemy"))
 		{
-			EnemyDied(other.gameObject);
+			EnemyDied(other.gameObject, 0);
 		}
 	}
 
@@ -118,7 +118,7 @@ public abstract class AttackTower : MonoBehaviour
 	}
 
 
-	private void EnemyDied(GameObject enemy)
+	private void EnemyDied(GameObject enemy, int value)
 	{
 		if (_targets.Contains(enemy))
 		{

@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 85c7cf67bef856144a05f930bb8817d3, type: 3}
-  m_Name: Missile Launcher Dual
+  m_Name: MissileLauncherDual
   m_EditorClassIdentifier: 
-  towerType: 4
+  towerType: 3
   towerName: Dual Missile Launcher
   prefab: {fileID: 1815566672332072, guid: c50ad28efe1fda045abfd19528c42573, type: 3}
   prototypePrefab: {fileID: 0}
-  buyFor: 700
-  sellFor: 500
+  upgradesTo: {fileID: 0}
+  buyFor: 500
+  sellFor: 400

@@ -9,7 +9,7 @@ public enum EnemyType { WALKER, TANK }
 
 public class EnemyAI : MonoBehaviour
 {
-	public static Action<GameObject> onEnemyDie;
+	public static Action<GameObject, int> onEnemyDie;
 
 	private NavMeshAgent _agent;
 	private Animator _anim;
@@ -101,7 +101,7 @@ public class EnemyAI : MonoBehaviour
 		explosion.transform.position = transform.position;
 		_anim.SetBool("isDead", true);
 
-		onEnemyDie?.Invoke(gameObject);
+		onEnemyDie?.Invoke(gameObject, _killValue);
 
 		yield return _pauseBeforeCleanup;
 		SpawnManager.Instance.DespawnEnemy(this);

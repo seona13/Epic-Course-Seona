@@ -6,10 +6,15 @@ using UnityEngine;
 
 public class PlayerManager : MonoSingleton<PlayerManager>
 {
-	public static event Action<int> onWarFundsChanged;
-
 	public int warFund = 500;
 
+
+
+	private void OnEnable()
+	{
+		TowerManager.onTowerPlaced += TowerBought;
+		EnemyAI.onEnemyDie += EnemyDied;
+	}
 
 
 	void Start()
@@ -24,9 +29,20 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 	}
 
 
-	public void OnWarFundsChanged(int amount)
+	private void OnDisable()
 	{
-		warFund += amount;
-		onWarFundsChanged?.Invoke(warFund);
+		TowerManager.onTowerPlaced -= TowerBought;
+	}
+
+
+	public void TowerBought(Vector3 pos, Tower tower)
+	{
+		warFund -= tower.buyFor;
+	}
+
+
+	public void EnemyDied(GameObject enemy, int value)
+	{
+		warFund += value;
 	}
 }

@@ -8,17 +8,21 @@ public class BuildSpot : MonoBehaviour
 {
 	public static event Action<bool> onOpenPlot;
 	public static event Action onTryPlaceTower;
+	public static event Action<Tower> onSelectTower;
 
 	private bool _placementModeActive = false;
 	private bool _available = true;
 	private ParticleSystem _particles;
+	private Tower _tower;
 
 
 
 	private void OnEnable()
 	{
 		TowerManager.onPlacementModeChange += PlacementMode;
-		TowerManager.onTowerPlaced += DeactivatePlot;
+		TowerManager.onTowerPlaced += PlaceTower;
+		UIManager.onUpgradeButtonClicked += OnUpgradeButtonClicked;
+		UIManager.onSellTowerButtonClicked += OnSellTowerButtonClicked;
 	}
 
 
@@ -36,7 +40,9 @@ public class BuildSpot : MonoBehaviour
 	private void OnDisable()
 	{
 		TowerManager.onPlacementModeChange -= PlacementMode;
-		TowerManager.onTowerPlaced -= DeactivatePlot;
+		TowerManager.onTowerPlaced -= PlaceTower;
+		UIManager.onUpgradeButtonClicked -= OnUpgradeButtonClicked;
+		UIManager.onSellTowerButtonClicked -= OnSellTowerButtonClicked;
 	}
 
 
@@ -53,10 +59,12 @@ public class BuildSpot : MonoBehaviour
 	{
 		if (_placementModeActive && _available)
 		{
-			if (onTryPlaceTower != null)
-			{
-				onTryPlaceTower();
-			}
+			onTryPlaceTower?.Invoke();
+		}
+
+		if (_placementModeActive == false && _available == false)
+		{
+			onSelectTower?.Invoke(_tower);
 		}
 	}
 
@@ -83,19 +91,31 @@ public class BuildSpot : MonoBehaviour
 
 	void OpenPlot(bool isOpen)
 	{
-		if (onOpenPlot != null)
-		{
-			onOpenPlot(isOpen);
-		}
+		onOpenPlot?.Invoke(isOpen);
 	}
 
 
-	void DeactivatePlot(Vector3 pos)
+	void PlaceTower(Vector3 pos, Tower tower)
 	{
 		if (transform.position == pos)
 		{
 			_available = false;
 			_particles.Stop();
+			_tower = tower;
 		}
+	}
+
+
+	void OnUpgradeButtonClicked(int towerType)
+	{
+		Debug.Log("Upgrading tower " + towerType);
+
+		PoolManager.Instance.RequestTower(towerType);
+	}
+
+
+	void OnSellTowerButtonClicked(int towerType)
+	{
+		Debug.Log("Selling tower " + towerType);
 	}
 }
