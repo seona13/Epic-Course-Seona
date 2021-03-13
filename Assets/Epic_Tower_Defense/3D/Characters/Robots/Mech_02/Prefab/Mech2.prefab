@@ -401,9 +401,8 @@ MonoBehaviour:
   _currentHealth: 0
   _killValue: 50
   _isDead: 0
-  _materials:
-  - {fileID: 2100000, guid: 5ede75d2a043d4fd0bf9a43c7781d1bb, type: 2}
-  - {fileID: 2100000, guid: 24656e193f638497b8d758807bfdb555, type: 2}
+  _waistToTurn: {fileID: 1917370851618318}
+  _parentConstraint: {fileID: 0}
 --- !u!195 &1648348267
 NavMeshAgent:
   m_ObjectHideFlags: 0

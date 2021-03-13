@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Animations;
 
 
 public enum EnemyType { WALKER, TANK }
@@ -28,6 +29,12 @@ public class EnemyAI : MonoBehaviour
 	[SerializeField]
 	private bool _isDead = false;
 
+	[Space(10)]
+
+	[SerializeField]
+	private GameObject _waistToTurn;
+	[SerializeField]
+	private ParentConstraint _parentConstraint;
 
 
 	void Awake()
@@ -106,6 +113,10 @@ public class EnemyAI : MonoBehaviour
 		// Make sure enemy is not in "dead" state
 		_agent.enabled = true;
 		_anim.SetBool("isDead", false);
+		if (_parentConstraint != null)
+		{
+			_parentConstraint.constraintActive = true;
+		}
 		_isDead = false;
 
 		// Set all renderers to "undisolved"
@@ -123,6 +134,10 @@ public class EnemyAI : MonoBehaviour
 		GameObject explosion = PoolManager.Instance.RequestExplosion();
 		explosion.transform.position = transform.position;
 		_anim.SetBool("isDead", true);
+		if (_parentConstraint != null)
+		{
+			_parentConstraint.constraintActive = false;
+		}
 		StartCoroutine(Disolve());
 
 		onEnemyDie?.Invoke(gameObject, _killValue);

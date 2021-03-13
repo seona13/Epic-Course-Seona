@@ -1525,6 +1525,7 @@ Transform:
   m_Children:
   - {fileID: 4106794716265170}
   - {fileID: 4014509653832364}
+  - {fileID: 1466587622635687014}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1545,9 +1546,8 @@ MonoBehaviour:
   _currentHealth: 0
   _killValue: 20
   _isDead: 0
-  _materials:
-  - {fileID: 2100000, guid: 368528edde98240ceb8562c4d1b09f63, type: 2}
-  - {fileID: 2100000, guid: ec085d8d1a3734a3487e505d544eb344, type: 2}
+  _waistToTurn: {fileID: 1003321565851518168}
+  _parentConstraint: {fileID: 4219093140133333044}
 --- !u!195 &1343467180
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -2100,6 +2100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4924385994462992}
+  - component: {fileID: 4219093140133333044}
   m_Layer: 8
   m_Name: Waist
   m_TagString: Untagged
@@ -2122,6 +2123,32 @@ Transform:
   m_Father: {fileID: 4470095754412136}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1773428102 &4219093140133333044
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807431960425264}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: -0.17732793, y: 0.011147378, z: -1.0242804}
+  m_RotationAtRest: {x: 2.6948268, y: 0, z: 0}
+  m_TranslationOffsets:
+  - {x: -0.003291756, y: 1.3769305, z: 0.039943445}
+  m_RotationOffsets:
+  - {x: 89.32855, y: -87.262314, z: -176.98112}
+  m_AffectTranslationX: 0
+  m_AffectTranslationY: 0
+  m_AffectTranslationZ: 0
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 1466587622635687014}
+    weight: 1
 --- !u!1 &1862091260575090
 GameObject:
   m_ObjectHideFlags: 0
@@ -2430,3 +2457,33 @@ SkinnedMeshRenderer:
     m_Center: {x: -0.3873129, y: -0.11206603, z: -2.0528226}
     m_Extent: {x: 1.3143929, y: 2.5263848, z: 2.7444339}
   m_DirtyAABB: 0
+--- !u!1 &1003321565851518168
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1466587622635687014}
+  m_Layer: 8
+  m_Name: WaistToTurn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1466587622635687014
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003321565851518168}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4505513421613776}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
