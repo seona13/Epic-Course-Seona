@@ -13,7 +13,9 @@ public class EnemyAI : MonoBehaviour
 
 	private NavMeshAgent _agent;
 	private Animator _anim;
+	private Renderer[] _renderers;
 	private WaitForSeconds _pauseBeforeCleanup;
+	private WaitForEndOfFrame _disolvePause;
 
 	[SerializeField]
 	private EnemyType _type;
@@ -27,9 +29,11 @@ public class EnemyAI : MonoBehaviour
 	private bool _isDead = false;
 
 
+
 	void Awake()
 	{
 		_pauseBeforeCleanup = new WaitForSeconds(5f);
+		_disolvePause = new WaitForEndOfFrame();
 
 		_agent = GetComponent<NavMeshAgent>();
 		if (_agent == null)
@@ -42,6 +46,12 @@ public class EnemyAI : MonoBehaviour
 		{
 			Debug.LogError("Missing Animator on enemy");
 		}
+
+		_renderers = GetComponentsInChildren<Renderer>();
+		if (_renderers.Length == 0)
+		{
+			Debug.LogError("No renderers found on enemy");
+		}
 	}
 
 
@@ -50,16 +60,11 @@ public class EnemyAI : MonoBehaviour
 		AttackTower.onCallForDamage += CheckIfTarget;
 		GameDevHQ.FileBase.Missile_Launcher.Missile.Missile.onCallForDamage += CheckIfTarget;
 
-		_agent.enabled = true;
+		Resurrect();
+
 		_agent.Warp(SpawnManager.Instance.GetInlet().position);
 		_agent.SetDestination(SpawnManager.Instance.GetOutlet().transform.position);
 
-		// Give enemy full health on spawn.
-		_currentHealth = _maxHealth;
-
-		// Make sure enemy is not in "dead" state
-		_anim.SetBool("isDead", false);
-		_isDead = false;
 	}
 
 
@@ -93,6 +98,24 @@ public class EnemyAI : MonoBehaviour
 	}
 
 
+	void Resurrect()
+	{
+		// Give enemy full health on spawn.
+		_currentHealth = _maxHealth;
+
+		// Make sure enemy is not in "dead" state
+		_agent.enabled = true;
+		_anim.SetBool("isDead", false);
+		_isDead = false;
+
+		// Set all renderers to "undisolved"
+		for (int i = 0; i < _renderers.Length; i++)
+		{
+			_renderers[i].material.SetFloat("_fillAmount", 0);
+		}
+	}
+
+
 	IEnumerator Die()
 	{
 		_agent.isStopped = true;
@@ -100,6 +123,7 @@ public class EnemyAI : MonoBehaviour
 		GameObject explosion = PoolManager.Instance.RequestExplosion();
 		explosion.transform.position = transform.position;
 		_anim.SetBool("isDead", true);
+		StartCoroutine(Disolve());
 
 		onEnemyDie?.Invoke(gameObject, _killValue);
 
@@ -107,4 +131,34 @@ public class EnemyAI : MonoBehaviour
 		SpawnManager.Instance.DespawnEnemy(this);
 		explosion.SetActive(false);
 	}
+
+
+	IEnumerator Disolve()
+	{
+		float value = 0;
+
+		while (value <= 1)
+		{
+			value += 0.005f;
+
+			for (int i = 0; i < _renderers.Length; i++)
+			{
+				_renderers[i].material.SetFloat("_fillAmount", value);
+			}
+
+			yield return _disolvePause;
+		}
+	}
 }
+
+//IEnumerator DoAThingOverTime(Color start, Color end, float duration)
+//{
+//	for (float t = 0f; t < duration; t += Time.deltaTime)
+//	{
+//		float normalizedTime = t / duration;
+//		//right here, you can now use normalizedTime as the third parameter in any Lerp from start to end
+//		someColorValue = Color.Lerp(start, end, normalizedTime);
+//		yield return null;
+//	}
+//	someColorValue = end; //without this, the value will end at something like 0.9992367
+//}
