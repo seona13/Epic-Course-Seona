@@ -7,9 +7,10 @@ using UnityEngine;
 public class TowerManager : MonoBehaviour
 {
 	public static event Action<bool> onPlacementModeChange;
-	public static event Action<Vector3, Tower> onTowerPlaced;
+	public static event Action<Vector3, Tower, GameObject> onTowerPlaced;
 
 	private bool _towerPlacementMode = false;
+	private bool _towerModifyMode = false;
 	private bool _canPlaceTower = false;
 
 	[SerializeField]
@@ -17,7 +18,9 @@ public class TowerManager : MonoBehaviour
 
 	private GameObject[] _prototypePool;
 	private GameObject _activePrototype;
+	private GameObject _activeTower;
 	private MeshRenderer _radius;
+
 
 	private int _towerType;
 	private Vector3 _plotPos;
@@ -33,6 +36,7 @@ public class TowerManager : MonoBehaviour
 	{
 		BuildSpot.onOpenPlot += CheckValidPlacement;
 		BuildSpot.onTryPlaceTower += TryPlaceTower;
+		BuildSpot.onSelectTower += TowerModifyMode;
 		UIManager.onBuildButtonClicked += OnBuildButtonClicked;
 	}
 
@@ -55,7 +59,7 @@ public class TowerManager : MonoBehaviour
 	{
 		if (Input.GetMouseButtonDown(1))
 		{
-			PlacementModeChange(false);
+			OnPlacementModeChange(false);
 			DeactivatePrototype();
 		}
 
@@ -67,13 +71,14 @@ public class TowerManager : MonoBehaviour
 	{
 		BuildSpot.onOpenPlot -= CheckValidPlacement;
 		BuildSpot.onTryPlaceTower -= TryPlaceTower;
+		BuildSpot.onSelectTower -= TowerModifyMode;
 		UIManager.onBuildButtonClicked -= OnBuildButtonClicked;
 	}
 
 
 	void OnBuildButtonClicked(int towerType)
 	{
-		PlacementModeChange(true);
+		OnPlacementModeChange(true);
 		DeactivatePrototype();
 		TowerPlacementMode(towerType);
 		_radius = _prototypePool[_towerType].GetComponentInChildren<Radius>().GetComponent<MeshRenderer>();
@@ -89,7 +94,7 @@ public class TowerManager : MonoBehaviour
 	}
 
 
-	void PlacementModeChange(bool status)
+	void OnPlacementModeChange(bool status)
 	{
 		_towerPlacementMode = status;
 		onPlacementModeChange?.Invoke(status);
@@ -101,6 +106,21 @@ public class TowerManager : MonoBehaviour
 		_towerType = type;
 		_activePrototype = _prototypePool[type];
 		_activePrototype.SetActive(true);
+	}
+
+
+	void TowerModifyMode(bool status, GameObject towerGO, Tower tower)
+	{
+		_towerModifyMode = status;
+
+		if (status)
+		{
+			_activeTower = towerGO;
+		}
+		else
+		{
+			_activeTower = null;
+		}
 	}
 
 
@@ -147,7 +167,7 @@ public class TowerManager : MonoBehaviour
 		{
 			GameObject tower = PoolManager.Instance.RequestTower(_towerType);
 			tower.transform.position = _plotPos;
-			onTowerPlaced?.Invoke(_plotPos, _assetDatabase.towers[_towerType]);
+			onTowerPlaced?.Invoke(_plotPos, _assetDatabase.towers[_towerType], tower);
 		}
 	}
 }

@@ -35,7 +35,7 @@ public class PlayerManager : MonoSingleton<PlayerManager>
 	}
 
 
-	public void TowerBought(Vector3 pos, Tower tower)
+	public void TowerBought(Vector3 pos, Tower tower, GameObject towerGO)
 	{
 		warFund -= tower.buyFor;
 	}

@@ -8,12 +8,13 @@ public class BuildSpot : MonoBehaviour
 {
 	public static event Action<bool> onOpenPlot;
 	public static event Action onTryPlaceTower;
-	public static event Action<Tower> onSelectTower;
+	public static event Action<bool, GameObject, Tower> onSelectTower;
 
 	private bool _placementModeActive = false;
 	private bool _available = true;
 	private ParticleSystem _particles;
 	private Tower _tower;
+	private GameObject _towerGO;
 
 
 
@@ -34,6 +35,10 @@ public class BuildSpot : MonoBehaviour
 
 	void Update()
 	{
+		if (Input.GetMouseButtonDown(1))
+		{
+			onSelectTower?.Invoke(false, _towerGO, _tower);
+		}
 	}
 
 
@@ -64,7 +69,7 @@ public class BuildSpot : MonoBehaviour
 
 		if (_placementModeActive == false && _available == false)
 		{
-			onSelectTower?.Invoke(_tower);
+			onSelectTower?.Invoke(true, _towerGO, _tower);
 		}
 	}
 
@@ -95,13 +100,14 @@ public class BuildSpot : MonoBehaviour
 	}
 
 
-	void PlaceTower(Vector3 pos, Tower tower)
+	void PlaceTower(Vector3 pos, Tower tower, GameObject towerGO)
 	{
 		if (transform.position == pos)
 		{
 			_available = false;
 			_particles.Stop();
 			_tower = tower;
+			_towerGO = towerGO;
 		}
 	}
 
@@ -109,6 +115,8 @@ public class BuildSpot : MonoBehaviour
 	void OnUpgradeButtonClicked(int towerType)
 	{
 		Debug.Log("Upgrading tower " + towerType);
+
+		_towerGO.SetActive(false);
 
 		PoolManager.Instance.RequestTower(towerType);
 	}

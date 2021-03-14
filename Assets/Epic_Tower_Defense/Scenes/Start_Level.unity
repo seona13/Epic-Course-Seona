@@ -4281,18 +4281,12 @@ MonoBehaviour:
   _assetDatabase: {fileID: 11400000, guid: e0771fe7010aa954ca8a25e67ee5a3dd, type: 2}
   _buildGatlingGunButton: {fileID: 150529102}
   _buildMissileLauncherButton: {fileID: 1416097952}
-  _upgradePanelGun: {fileID: 1364565713}
-  _upgradeGunCost: {fileID: 1872218051}
-  _upgradeGunConfirm: {fileID: 602877137}
-  _upgradeGunCancel: {fileID: 746024087}
-  _upgradePanelMissile: {fileID: 46770128}
-  _upgradeMissileCost: {fileID: 1574409126}
-  _upgradeMissileConfirm: {fileID: 1328009915}
-  _upgradeMissileCancel: {fileID: 381642235}
-  _sellTowerPanel: {fileID: 1624499973}
-  _sellTowerRefund: {fileID: 1700177798}
-  _sellTowerConfirm: {fileID: 1571805993}
-  _sellTowerCancel: {fileID: 321799143}
+  _upgradeButtonGun: {fileID: 1775518187}
+  _upgradeGunCost: {fileID: 82265431}
+  _upgradeButtonMissile: {fileID: 1810307198}
+  _upgradeMissileCost: {fileID: 323238009}
+  _sellTowerButton: {fileID: 508671812}
+  _sellTowerRefund: {fileID: 349973880}
 --- !u!1001 &595690249
 PrefabInstance:
   m_ObjectHideFlags: 0
