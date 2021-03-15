@@ -26,8 +26,9 @@ public class EnemyAI : MonoBehaviour
 	private int _currentHealth;
 	[SerializeField]
 	private int _killValue = 50;
-	[SerializeField]
 	private bool _isDead = false;
+	private bool _isFiring = false;
+	private GameObject _target;
 
 	[Space(10)]
 
@@ -66,6 +67,8 @@ public class EnemyAI : MonoBehaviour
 	{
 		AttackTower.onCallForDamage += CheckIfTarget;
 		GameDevHQ.FileBase.Missile_Launcher.Missile.Missile.onCallForDamage += CheckIfTarget;
+		AttackTower.onEnemyEntered += CheckIfEnemy;
+		AttackTower.onEnemyExited += StopFiring;
 
 		Resurrect();
 
@@ -79,6 +82,8 @@ public class EnemyAI : MonoBehaviour
 	{
 		AttackTower.onCallForDamage -= CheckIfTarget;
 		GameDevHQ.FileBase.Missile_Launcher.Missile.Missile.onCallForDamage -= CheckIfTarget;
+		AttackTower.onEnemyEntered -= CheckIfEnemy;
+		AttackTower.onEnemyExited -= StopFiring;
 	}
 
 
@@ -87,6 +92,26 @@ public class EnemyAI : MonoBehaviour
 		if (gameObject == target)
 		{
 			TakeDamage(amount);
+		}
+	}
+
+
+	void CheckIfEnemy(GameObject caller)
+	{
+		if (caller == gameObject)
+		{
+			_target = caller;
+			_isFiring = true;
+		}
+	}
+
+
+	void StopFiring(GameObject caller)
+	{
+		if (caller == gameObject)
+		{
+			_target = null;
+			_isFiring = false;
 		}
 	}
 
