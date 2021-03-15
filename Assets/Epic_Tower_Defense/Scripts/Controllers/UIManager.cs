@@ -174,7 +174,6 @@ public class UIManager : MonoBehaviour
 	#region Speed Controls
 	public void PauseButtonClicked()
 	{
-		Debug.Log("Pause button clicked");
 		onPauseButtonClicked?.Invoke();
 
 		_pauseSelected.SetActive(true);
@@ -185,7 +184,6 @@ public class UIManager : MonoBehaviour
 
 	public void PlayButtonClicked()
 	{
-		Debug.Log("Play button clicked");
 		onPlayButtonClicked?.Invoke();
 
 		_pauseSelected.SetActive(false);
@@ -196,7 +194,6 @@ public class UIManager : MonoBehaviour
 
 	public void FFButtonClicked()
 	{
-		Debug.Log("FF button clicked");
 		onFFButtonClicked?.Invoke();
 
 		_pauseSelected.SetActive(false);
