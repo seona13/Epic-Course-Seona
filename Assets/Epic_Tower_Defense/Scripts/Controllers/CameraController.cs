@@ -24,16 +24,11 @@ public class CameraController : MonoBehaviour
 	private Vector3 _mousePos;
 	private bool _inBounds;
 
-	[SerializeField]
-	private float _timeScale = 1f;
-	private float _fixedDeltaTime;
-
 
 
 	void Start()
 	{
 		CalculateEdges();
-		_fixedDeltaTime = Time.fixedDeltaTime;
 	}
 
 
@@ -45,12 +40,6 @@ public class CameraController : MonoBehaviour
 		}
 		DoPan();
 		DoZoom();
-
-		if (Time.timeScale != _timeScale)
-		{
-			Time.timeScale = _timeScale;
-			Time.fixedDeltaTime = _fixedDeltaTime * Time.timeScale;
-		}
 	}
 
 

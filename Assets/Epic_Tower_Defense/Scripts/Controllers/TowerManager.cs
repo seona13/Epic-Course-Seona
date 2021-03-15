@@ -163,7 +163,7 @@ public class TowerManager : MonoBehaviour
 	void TryPlaceTower()
 	{
 		int towerCost = _assetDatabase.towers[_towerType].buyFor;
-		if (PlayerManager.Instance.warFund >= towerCost)
+		if (GameManager.Instance.warFund >= towerCost)
 		{
 			GameObject tower = PoolManager.Instance.RequestTower(_towerType);
 			tower.transform.position = _plotPos;

@@ -1,10 +1,13 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 
 public class SpawnManager : MonoSingleton<SpawnManager>
 {
+	public static event Action<int> onWaveIncrement;
+
 	[SerializeField]
 	private Transform inlet;
 	[SerializeField]
@@ -52,6 +55,7 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 		{
 			StopCoroutine(SpawnEnemy());
 			_waveCount++;
+			WaveIncrement(_waveCount);
 			_waveSpawns = _waveCount * waveMultiplier;
 			_spawnCount = 0;
 			_killCount = 0;
@@ -59,6 +63,12 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 		}
 
 		enemy.gameObject.SetActive(false);
+	}
+
+
+	void WaveIncrement(int wave)
+	{
+		onWaveIncrement?.Invoke(wave);
 	}
 
 
