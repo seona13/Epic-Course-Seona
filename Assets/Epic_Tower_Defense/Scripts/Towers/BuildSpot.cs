@@ -8,7 +8,7 @@ public class BuildSpot : MonoBehaviour
 {
 	public static event Action<bool> onOpenPlot;
 	public static event Action onTryPlaceTower;
-	public static event Action<bool, GameObject, Tower> onSelectTower;
+	public static event Action<BuildSpot> onSelectTower;
 
 	private bool _placementModeActive = false;
 	private bool _available = true;
@@ -22,8 +22,6 @@ public class BuildSpot : MonoBehaviour
 	{
 		TowerManager.onPlacementModeChange += PlacementMode;
 		TowerManager.onTowerPlaced += PlaceTower;
-		UIManager.onUpgradeButtonClicked += OnUpgradeButtonClicked;
-		UIManager.onSellTowerButtonClicked += OnSellTowerButtonClicked;
 	}
 
 
@@ -35,10 +33,6 @@ public class BuildSpot : MonoBehaviour
 
 	void Update()
 	{
-		if (Input.GetMouseButtonDown(1))
-		{
-			onSelectTower?.Invoke(false, _towerGO, _tower);
-		}
 	}
 
 
@@ -46,8 +40,6 @@ public class BuildSpot : MonoBehaviour
 	{
 		TowerManager.onPlacementModeChange -= PlacementMode;
 		TowerManager.onTowerPlaced -= PlaceTower;
-		UIManager.onUpgradeButtonClicked -= OnUpgradeButtonClicked;
-		UIManager.onSellTowerButtonClicked -= OnSellTowerButtonClicked;
 	}
 
 
@@ -69,7 +61,7 @@ public class BuildSpot : MonoBehaviour
 
 		if (_placementModeActive == false && _available == false)
 		{
-			onSelectTower?.Invoke(true, _towerGO, _tower);
+			onSelectTower?.Invoke(this);
 		}
 	}
 
@@ -77,6 +69,33 @@ public class BuildSpot : MonoBehaviour
 	void OnMouseExit()
 	{
 		OpenPlot(false);
+	}
+
+
+	public Tower GetTower()
+	{
+		return _tower;
+	}
+
+
+	public GameObject GetGameObject()
+	{
+		return _towerGO;
+	}
+
+
+	public void SetNewTowerInfo(GameObject newGO, Tower newTower)
+	{
+		_towerGO = newGO;
+		_tower = newTower;
+	}
+
+
+	public void EmptyTowerInfo()
+	{
+		_tower = null;
+		_towerGO = null;
+		_available = true;
 	}
 
 
@@ -109,21 +128,5 @@ public class BuildSpot : MonoBehaviour
 			_tower = tower;
 			_towerGO = towerGO;
 		}
-	}
-
-
-	void OnUpgradeButtonClicked(int towerType)
-	{
-		Debug.Log("Upgrading tower " + towerType);
-
-		_towerGO.SetActive(false);
-
-		PoolManager.Instance.RequestTower(towerType);
-	}
-
-
-	void OnSellTowerButtonClicked(int towerType)
-	{
-		Debug.Log("Selling tower " + towerType);
 	}
 }

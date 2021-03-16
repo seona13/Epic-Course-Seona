@@ -8,8 +8,8 @@ using UnityEngine.UI;
 public class UIManager : MonoBehaviour
 {
 	public static event Action<int> onBuildButtonClicked;
-	public static event Action<int> onUpgradeButtonClicked;
-	public static event Action<int> onSellTowerButtonClicked;
+	public static event Action<BuildSpot> onUpgradeButtonClicked;
+	public static event Action<BuildSpot> onSellTowerButtonClicked;
 	public static event Action onPauseButtonClicked;
 	public static event Action onPlayButtonClicked;
 	public static event Action onFFButtonClicked;
@@ -75,6 +75,7 @@ public class UIManager : MonoBehaviour
 	private void OnEnable()
 	{
 		BuildSpot.onSelectTower += ShowTowerOptions;
+		TowerManager.onExitModifyMode += DisableTowerOptions;
 		SpawnManager.onWaveIncrement += OnWaveIncrement;
 		GameManager.onLivesChanged += OnLivesChanged;
 		GameManager.onWarFundsChanged += OnWarFundChanged;
@@ -93,12 +94,7 @@ public class UIManager : MonoBehaviour
 		_buildMissileLauncherButton.onClick.AddListener(() => BuildButtonClicked(1));
 		_buildMissileLauncherButton.GetComponentInChildren<Text>().text = "$" + _assetDatabase.towers[1].buyFor;
 
-		_upgradeButtonGun.interactable = false;
-		_upgradeButtonMissile.interactable = false;
-		_sellTowerButton.interactable = false;
-
-		_upgradeButtonGun.onClick.AddListener(() => UpgradeButtonClicked(_assetDatabase.towers[0].upgradesTo.towerType));
-		_upgradeButtonMissile.onClick.AddListener(() => UpgradeButtonClicked(_assetDatabase.towers[1].upgradesTo.towerType));
+		DisableTowerOptions();
 	}
 
 
@@ -111,6 +107,7 @@ public class UIManager : MonoBehaviour
 	private void OnDisable()
 	{
 		BuildSpot.onSelectTower -= ShowTowerOptions;
+		TowerManager.onExitModifyMode -= DisableTowerOptions;
 		SpawnManager.onWaveIncrement -= OnWaveIncrement;
 		GameManager.onLivesChanged -= OnLivesChanged;
 		GameManager.onWarFundsChanged -= OnWarFundChanged;
@@ -127,46 +124,50 @@ public class UIManager : MonoBehaviour
 	}
 
 
-	void UpgradeButtonClicked(int towerID)
+	void UpgradeButtonClicked(BuildSpot buildSpot)
 	{
-		onUpgradeButtonClicked?.Invoke(towerID);
+		onUpgradeButtonClicked?.Invoke(buildSpot);
 	}
 
 
-	void SellTowerButtonClicked(int towerID)
+	void SellTowerButtonClicked(BuildSpot buildSpot)
 	{
-		onSellTowerButtonClicked?.Invoke(towerID);
+		onSellTowerButtonClicked?.Invoke(buildSpot);
 	}
 
 
-	void ShowTowerOptions(bool status, GameObject towerGO, Tower tower)
+	void ShowTowerOptions(BuildSpot buildSpot)
 	{
-		if (status)
+		if (buildSpot.GetTower().towerType == 0 && buildSpot.GetTower().upgradesTo != null)
 		{
-			if (tower.towerType == 0 && tower.upgradesTo != null)
-			{
-				_upgradeButtonMissile.interactable = false;
-				_upgradeButtonGun.interactable = true;
-				_upgradeGunCost.text = "$" + tower.upgradesTo.buyFor.ToString();
-			}
-			else if (tower.towerType == 1 && tower.upgradesTo != null)
-			{
-				_upgradeButtonGun.interactable = false;
-				_upgradeButtonMissile.interactable = true;
-				_upgradeMissileCost.text = "$" + tower.upgradesTo.buyFor.ToString();
-			}
-
-			_sellTowerButton.interactable = true;
-			_sellTowerRefund.text = "$" + tower.sellFor.ToString();
-			_sellTowerButton.onClick.RemoveAllListeners();
-			_sellTowerButton.onClick.AddListener(() => SellTowerButtonClicked(tower.towerType));
+			_upgradeButtonMissile.interactable = false;
+			_upgradeButtonGun.interactable = true;
+			_upgradeGunCost.text = "$" + buildSpot.GetTower().upgradesTo.buyFor.ToString();
+			_upgradeButtonGun.onClick.RemoveAllListeners();
+			_upgradeButtonGun.onClick.AddListener(() => UpgradeButtonClicked(buildSpot));
 		}
-		else
+		else if (buildSpot.GetTower().towerType == 1 && buildSpot.GetTower().upgradesTo != null)
 		{
 			_upgradeButtonGun.interactable = false;
-			_upgradeButtonMissile.interactable = false;
-			_sellTowerButton.interactable = false;
+			_upgradeButtonMissile.interactable = true;
+			_upgradeMissileCost.text = "$" + buildSpot.GetTower().upgradesTo.buyFor.ToString();
+			_upgradeButtonMissile.onClick.RemoveAllListeners();
+			_upgradeButtonMissile.onClick.AddListener(() => UpgradeButtonClicked(buildSpot));
 		}
+
+		_sellTowerButton.interactable = true;
+		_sellTowerRefund.text = "$" + buildSpot.GetTower().sellFor.ToString();
+		_sellTowerButton.onClick.RemoveAllListeners();
+		_sellTowerButton.onClick.AddListener(() => SellTowerButtonClicked(buildSpot));
+	}
+
+
+	void DisableTowerOptions()
+	{
+		_upgradeButtonGun.interactable = false;
+		_upgradeButtonMissile.interactable = false;
+		_sellTowerButton.interactable = false;
+		_sellTowerRefund.text = "";
 	}
 	#endregion
 

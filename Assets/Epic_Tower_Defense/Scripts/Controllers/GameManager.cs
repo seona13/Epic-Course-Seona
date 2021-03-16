@@ -22,8 +22,10 @@ public class GameManager : MonoSingleton<GameManager>
 
 	private void OnEnable()
 	{
-		TowerManager.onTowerPlaced += TowerBought;
-		EnemyAI.onEnemyDie += EnemyDied;
+		TowerManager.onTowerPlaced += OnTowerBought;
+		TowerManager.onTowerUpgraded += OnTowerUpgraded;
+		TowerManager.onTowerSold += OnTowerSold;
+		EnemyAI.onEnemyDie += OnEnemyDied;
 		UIManager.onPauseButtonClicked += OnPauseButtonClicked;
 		UIManager.onPlayButtonClicked += OnPlayButtonClicked;
 		UIManager.onFFButtonClicked += OnFFButtonClicked;
@@ -49,8 +51,10 @@ public class GameManager : MonoSingleton<GameManager>
 
 	private void OnDisable()
 	{
-		TowerManager.onTowerPlaced -= TowerBought;
-		EnemyAI.onEnemyDie -= EnemyDied;
+		TowerManager.onTowerPlaced -= OnTowerBought;
+		TowerManager.onTowerUpgraded -= OnTowerUpgraded;
+		TowerManager.onTowerSold -= OnTowerSold;
+		EnemyAI.onEnemyDie -= OnEnemyDied;
 		UIManager.onPauseButtonClicked -= OnPauseButtonClicked;
 		UIManager.onPlayButtonClicked -= OnPlayButtonClicked;
 		UIManager.onFFButtonClicked -= OnFFButtonClicked;
@@ -67,14 +71,28 @@ public class GameManager : MonoSingleton<GameManager>
 	}
 
 
-	public void TowerBought(Vector3 pos, Tower tower, GameObject towerGO)
+	public void OnTowerBought(Vector3 pos, Tower tower, GameObject towerGO)
 	{
 		warFund -= tower.buyFor;
 		WarFundChanged();
 	}
 
 
-	public void EnemyDied(GameObject enemy, int value)
+	void OnTowerUpgraded(int amount)
+	{
+		warFund -= amount;
+		WarFundChanged();
+	}
+
+
+	void OnTowerSold(int amount)
+	{
+		warFund += amount;
+		WarFundChanged();
+	}
+
+
+	public void OnEnemyDied(GameObject enemy, int value)
 	{
 		warFund += value;
 		WarFundChanged();

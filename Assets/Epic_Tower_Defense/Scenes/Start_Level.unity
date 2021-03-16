@@ -2361,7 +2361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf18dec356cb4a44dbf6b90029cfbbd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  warFund: 500
+  warFund: 800
   _lives: 100
 --- !u!4 &331505759
 Transform:
@@ -4393,7 +4393,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 579980663}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -6768,7 +6768,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 0}
+  m_TargetGraphic: {fileID: 964756854}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:

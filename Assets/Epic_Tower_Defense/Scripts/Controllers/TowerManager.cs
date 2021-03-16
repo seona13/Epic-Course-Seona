@@ -7,7 +7,10 @@ using UnityEngine;
 public class TowerManager : MonoBehaviour
 {
 	public static event Action<bool> onPlacementModeChange;
+	public static event Action onExitModifyMode;
 	public static event Action<Vector3, Tower, GameObject> onTowerPlaced;
+	public static event Action<int> onTowerUpgraded;
+	public static event Action<int> onTowerSold;
 
 	private bool _towerPlacementMode = false;
 	private bool _towerModifyMode = false;
@@ -38,6 +41,8 @@ public class TowerManager : MonoBehaviour
 		BuildSpot.onTryPlaceTower += TryPlaceTower;
 		BuildSpot.onSelectTower += TowerModifyMode;
 		UIManager.onBuildButtonClicked += OnBuildButtonClicked;
+		UIManager.onUpgradeButtonClicked += OnUpgradeTower;
+		UIManager.onSellTowerButtonClicked += OnSellTower;
 	}
 
 
@@ -61,6 +66,12 @@ public class TowerManager : MonoBehaviour
 		{
 			OnPlacementModeChange(false);
 			DeactivatePrototype();
+
+			if (_towerModifyMode)
+			{
+				_towerModifyMode = false;
+				onExitModifyMode?.Invoke();
+			}
 		}
 
 		TowerCastingRay();
@@ -73,6 +84,8 @@ public class TowerManager : MonoBehaviour
 		BuildSpot.onTryPlaceTower -= TryPlaceTower;
 		BuildSpot.onSelectTower -= TowerModifyMode;
 		UIManager.onBuildButtonClicked -= OnBuildButtonClicked;
+		UIManager.onUpgradeButtonClicked -= OnUpgradeTower;
+		UIManager.onSellTowerButtonClicked -= OnSellTower;
 	}
 
 
@@ -109,18 +122,9 @@ public class TowerManager : MonoBehaviour
 	}
 
 
-	void TowerModifyMode(bool status, GameObject towerGO, Tower tower)
+	void TowerModifyMode(BuildSpot buildSpot)
 	{
-		_towerModifyMode = status;
-
-		if (status)
-		{
-			_activeTower = towerGO;
-		}
-		else
-		{
-			_activeTower = null;
-		}
+		_towerModifyMode = true;
 	}
 
 
@@ -169,5 +173,41 @@ public class TowerManager : MonoBehaviour
 			tower.transform.position = _plotPos;
 			onTowerPlaced?.Invoke(_plotPos, _assetDatabase.towers[_towerType], tower);
 		}
+	}
+
+
+	void OnUpgradeTower(BuildSpot buildSpot)
+	{
+		// Disable the existing tower
+		buildSpot.GetGameObject().SetActive(false);
+
+		// Request a new tower from the pool
+		Tower oldTower = buildSpot.GetTower();
+		GameObject tower = PoolManager.Instance.RequestTower(oldTower.upgradesTo.towerType);
+		tower.transform.position = buildSpot.gameObject.transform.position;
+
+		// Deduct warfunds
+		onTowerUpgraded?.Invoke(oldTower.upgradesTo.buyFor);
+
+		// Tell buildSpot about its new tower
+		buildSpot.SetNewTowerInfo(tower, oldTower);
+
+		onExitModifyMode?.Invoke();
+	}
+
+
+	void OnSellTower(BuildSpot buildSpot)
+	{
+		// Disable the existing tower
+		buildSpot.GetGameObject().SetActive(false);
+
+		// Add warfunds
+		onTowerSold?.Invoke(buildSpot.GetTower().sellFor);
+
+		// Tell buildspot it is now towerless
+		buildSpot.EmptyTowerInfo();
+
+		// exit upgrade mode
+		onExitModifyMode?.Invoke();
 	}
 }
