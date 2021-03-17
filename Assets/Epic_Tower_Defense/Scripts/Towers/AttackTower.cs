@@ -11,8 +11,6 @@ public enum TowerType { GATLING, MISSILE };
 public abstract class AttackTower : MonoBehaviour
 {
 	public static event Action<GameObject, int> onCallForDamage;
-	public static event Action<GameObject> onEnemyEntered;
-	public static event Action<GameObject> onEnemyExited;
 
 	[SerializeField]
 	protected TowerType _towerType;
@@ -47,7 +45,6 @@ public abstract class AttackTower : MonoBehaviour
 		if (other.CompareTag("Enemy"))
 		{
 			_targets.Add(other.gameObject);
-			onEnemyEntered?.Invoke(other.gameObject);
 
 			if (_currentTarget == null)
 			{
@@ -72,7 +69,6 @@ public abstract class AttackTower : MonoBehaviour
 		if (other.CompareTag("Enemy"))
 		{
 			EnemyDied(other.gameObject, 0);
-			onEnemyExited?.Invoke(other.gameObject);
 		}
 	}
 

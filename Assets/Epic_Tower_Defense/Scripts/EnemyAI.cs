@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Animations;
@@ -10,10 +11,13 @@ public enum EnemyType { WALKER, TANK }
 
 public class EnemyAI : MonoBehaviour
 {
-	public static Action<GameObject, int> onEnemyDie;
+	public static event Action<GameObject, int> onEnemyDie;
+	public static event Action onEnemyRespawn;
+	public static event Action<int> onEnemyDamaged;
 
 	private NavMeshAgent _agent;
 	private Animator _anim;
+	private Damagable _damagable;
 	private Renderer[] _renderers;
 	private WaitForSeconds _pauseBeforeCleanup;
 	private WaitForEndOfFrame _disolvePause;
@@ -21,14 +25,8 @@ public class EnemyAI : MonoBehaviour
 	[SerializeField]
 	private EnemyType _type;
 	[SerializeField]
-	private int _maxHealth = 200;
-	[SerializeField]
-	private int _currentHealth;
-	[SerializeField]
 	private int _killValue = 50;
 	private bool _isDead = false;
-	private bool _isFiring = false;
-	private GameObject _target;
 
 	[Space(10)]
 
@@ -36,6 +34,9 @@ public class EnemyAI : MonoBehaviour
 	private GameObject _waistToTurn;
 	[SerializeField]
 	private ParentConstraint _parentConstraint;
+	private bool _isFiring = false;
+	private List<GameObject> _targets = new List<GameObject>();
+	private GameObject _currentTarget;
 
 
 	void Awake()
@@ -55,6 +56,12 @@ public class EnemyAI : MonoBehaviour
 			Debug.LogError("Missing Animator on enemy");
 		}
 
+		_damagable = GetComponent<Damagable>();
+		if (_damagable == null)
+		{
+			Debug.LogError("Missing Damagable component on enemy");
+		}
+
 		_renderers = GetComponentsInChildren<Renderer>();
 		if (_renderers.Length == 0)
 		{
@@ -67,27 +74,117 @@ public class EnemyAI : MonoBehaviour
 	{
 		AttackTower.onCallForDamage += CheckIfTarget;
 		GameDevHQ.FileBase.Missile_Launcher.Missile.Missile.onCallForDamage += CheckIfTarget;
-		AttackTower.onEnemyEntered += CheckIfEnemy;
-		AttackTower.onEnemyExited += StopFiring;
 
 		Resurrect();
 
 		_agent.Warp(SpawnManager.Instance.GetInlet().position);
 		_agent.SetDestination(SpawnManager.Instance.GetOutlet().transform.position);
-
 	}
 
 
-	private void OnDisable()
+	void OnDisable()
 	{
 		AttackTower.onCallForDamage -= CheckIfTarget;
 		GameDevHQ.FileBase.Missile_Launcher.Missile.Missile.onCallForDamage -= CheckIfTarget;
-		AttackTower.onEnemyEntered -= CheckIfEnemy;
-		AttackTower.onEnemyExited -= StopFiring;
 	}
 
 
-	private void CheckIfTarget(GameObject target, int amount)
+	#region Targeting Towers
+	void OnTriggerEnter(Collider other)
+	{
+		if (other.CompareTag("Tower"))
+		{
+			_targets.Add(other.gameObject);
+
+			if (_currentTarget == null)
+			{
+				AcquireTarget();
+				StartFiring();
+			}
+		}
+	}
+
+
+	void OnTriggerStay(Collider other)
+	{
+		if (_currentTarget != null)
+		{
+			LookAtTarget();
+		}
+	}
+
+
+	void OnTriggerExit(Collider other)
+	{
+		if (other.CompareTag("Tower"))
+		{
+			TowerRemoved(other.gameObject, 0);
+		}
+	}
+
+
+	void AcquireTarget()
+	{
+		if (_targets.Count > 0)
+		{
+			_currentTarget = _targets.First();
+		}
+		else
+		{
+			_currentTarget = null;
+			StopFiring();
+		}
+	}
+
+
+	void LookAtTarget()
+	{
+		Quaternion lookRotation;
+
+		if (_currentTarget != null)
+		{
+			Vector3 directionToFace = _currentTarget.transform.position - _waistToTurn.transform.position;
+			lookRotation = Quaternion.LookRotation(directionToFace);
+		}
+		else
+		{
+			lookRotation = Quaternion.LookRotation(Vector3.zero);
+		}
+		_waistToTurn.transform.rotation = Quaternion.Slerp(_waistToTurn.transform.rotation, lookRotation, Time.deltaTime * 10);
+	}
+
+
+	void StartFiring()
+	{
+		_isFiring = true;
+		_anim.SetBool("isShooting", true);
+	}
+
+
+	void StopFiring()
+	{
+		_isFiring = false;
+		_anim.SetBool("isShooting", false);
+	}
+
+
+	void TowerRemoved(GameObject tower, int value)
+	{
+		if (_targets.Contains(tower))
+		{
+			_targets.Remove(tower);
+		}
+
+		if (_currentTarget == tower)
+		{
+			AcquireTarget();
+		}
+	}
+	#endregion
+
+
+	#region Being Targeted
+	void CheckIfTarget(GameObject target, int amount)
 	{
 		if (gameObject == target)
 		{
@@ -96,44 +193,26 @@ public class EnemyAI : MonoBehaviour
 	}
 
 
-	void CheckIfEnemy(GameObject caller)
-	{
-		if (caller == gameObject)
-		{
-			_target = caller;
-			_isFiring = true;
-		}
-	}
-
-
-	void StopFiring(GameObject caller)
-	{
-		if (caller == gameObject)
-		{
-			_target = null;
-			_isFiring = false;
-		}
-	}
-
-
 	public void TakeDamage(int amount)
 	{
 		if (_isDead == false)
 		{
-			_currentHealth -= amount;
-			if (_currentHealth <= 0)
+			onEnemyDamaged?.Invoke(amount);
+
+			if (_damagable.GetCurrentHealth() <= 0)
 			{
 				_isDead = true;
 				StartCoroutine(Die());
 			}
 		}
 	}
+	#endregion
 
 
+	#region Death and Resurrection
 	void Resurrect()
 	{
-		// Give enemy full health on spawn.
-		_currentHealth = _maxHealth;
+		onEnemyRespawn?.Invoke();
 
 		// Make sure enemy is not in "dead" state
 		_agent.enabled = true;
@@ -189,16 +268,5 @@ public class EnemyAI : MonoBehaviour
 			yield return _disolvePause;
 		}
 	}
+	#endregion
 }
-
-//IEnumerator DoAThingOverTime(Color start, Color end, float duration)
-//{
-//	for (float t = 0f; t < duration; t += Time.deltaTime)
-//	{
-//		float normalizedTime = t / duration;
-//		//right here, you can now use normalizedTime as the third parameter in any Lerp from start to end
-//		someColorValue = Color.Lerp(start, end, normalizedTime);
-//		yield return null;
-//	}
-//	someColorValue = end; //without this, the value will end at something like 0.9992367
-//}
