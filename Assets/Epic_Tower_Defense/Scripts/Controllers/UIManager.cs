@@ -66,9 +66,23 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private Text _waveCounter;
 	[SerializeField]
-	private GameObject _statusPanel;
+	private GameObject _levelPanel;
+	[SerializeField]
+	private Text _levelText;
+
+	[Space(10)]
+
+	[SerializeField]
+	private Color _normalUIColour;
+	[SerializeField]
+	private Color _dangerUIColour;
+	[SerializeField]
+	private Color _criticalUIColour;
 	[SerializeField]
 	private Text _statusText;
+	[SerializeField]
+	private Image[] _panels;
+
 
 	private int _selectedTower = 999;
 
@@ -80,6 +94,7 @@ public class UIManager : MonoBehaviour
 		TowerManager.onExitModifyMode += DisableTowerOptions;
 		SpawnManager.onWaveIncrement += OnWaveIncrement;
 		GameManager.onLivesChanged += OnLivesChanged;
+		GameManager.onStatusChanged += OnStatusChanged;
 		GameManager.onWarFundsChanged += OnWarFundChanged;
 		GameManager.onLevelComplete += OnLevelComplete;
 		GameManager.onGameWon += OnGameWon;
@@ -115,6 +130,7 @@ public class UIManager : MonoBehaviour
 		TowerManager.onExitModifyMode -= DisableTowerOptions;
 		SpawnManager.onWaveIncrement -= OnWaveIncrement;
 		GameManager.onLivesChanged -= OnLivesChanged;
+		GameManager.onStatusChanged -= OnStatusChanged;
 		GameManager.onWarFundsChanged -= OnWarFundChanged;
 		GameManager.onLevelComplete -= OnLevelComplete;
 		GameManager.onGameWon -= OnGameWon;
@@ -217,6 +233,35 @@ public class UIManager : MonoBehaviour
 	#endregion
 
 
+	#region Level Management
+	void OnWaveIncrement(int wave)
+	{
+		_waveCounter.text = wave + " / 10";
+	}
+
+
+	void OnLevelComplete()
+	{
+		_statusText.text = "LEVEL\nCOMPLETE";
+		_levelPanel.SetActive(true);
+	}
+
+
+	void OnGameWon()
+	{
+		_statusText.text = "YOU\nTRIUMPH";
+		_levelPanel.SetActive(true);
+	}
+
+
+	void OnGameLost()
+	{
+		_statusText.text = "YOU\nLOST";
+		_levelPanel.SetActive(true);
+	}
+	#endregion
+
+
 	public void RestartButtonClicked()
 	{
 		_restartSelected.SetActive(true);
@@ -272,31 +317,25 @@ public class UIManager : MonoBehaviour
 	}
 
 
-	#region Level Management
-	void OnWaveIncrement(int wave)
+	void OnStatusChanged(Status status)
 	{
-		_waveCounter.text = wave + " / 10";
+		Color currentColour = _normalUIColour;
+		_statusText.text = "Good";
+
+		if (status == Status.DANGER)
+		{
+			currentColour = _dangerUIColour;
+			_statusText.text = "Danger";
+		}
+		else if (status == Status.CRITICAL)
+		{
+			currentColour = _criticalUIColour;
+			_statusText.text = "Critical";
+		}
+
+		foreach (Image panel in _panels)
+		{
+			panel.color = currentColour;
+		}
 	}
-
-
-	void OnLevelComplete()
-	{
-		_statusText.text = "LEVEL\nCOMPLETE";
-		_statusPanel.SetActive(true);
-	}
-
-
-	void OnGameWon()
-	{
-		_statusText.text = "YOU\nTRIUMPH";
-		_statusPanel.SetActive(true);
-	}
-
-
-	void OnGameLost()
-	{
-		_statusText.text = "YOU\nLOST";
-		_statusPanel.SetActive(true);
-	}
-	#endregion
 }

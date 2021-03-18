@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
+public enum Status { NORMAL, DANGER, CRITICAL }
+
 public class GameManager : MonoSingleton<GameManager>
 {
 	public static event Action<int> onLivesChanged;
@@ -12,11 +14,14 @@ public class GameManager : MonoSingleton<GameManager>
 	public static event Action onLevelComplete;
 	public static event Action onGameWon;
 	public static event Action onGameLost;
+	public static event Action<Status> onStatusChanged;
 
 	private float _fixedDeltaTime;
 	public int warFund = 500;
 	[SerializeField]
 	private int _lives;
+	[SerializeField]
+	private Status _status = Status.NORMAL;
 
 
 
@@ -40,6 +45,7 @@ public class GameManager : MonoSingleton<GameManager>
 		_fixedDeltaTime = Time.fixedDeltaTime;
 		ChangeTimeScale(1);
 		LivesChanged();
+		onStatusChanged?.Invoke(_status);
 	}
 
 
@@ -159,6 +165,17 @@ public class GameManager : MonoSingleton<GameManager>
 	void OnEnemyEscaped()
 	{
 		_lives--;
+
+		if (_lives <= 50 && _status == Status.NORMAL)
+		{
+			_status = Status.DANGER;
+			onStatusChanged?.Invoke(_status);
+		}
+		else if (_lives <= 20 && _status == Status.DANGER)
+		{
+			_status = Status.CRITICAL;
+			onStatusChanged?.Invoke(_status);
+		}
 
 		if (_lives > 0)
 		{
