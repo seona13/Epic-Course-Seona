@@ -97,6 +97,7 @@ public class EnemyAI : MonoBehaviour
 			if (_currentTarget == null)
 			{
 				AcquireTarget();
+				StopCoroutine(StopFiring());
 				StartFiring();
 			}
 		}
@@ -130,7 +131,7 @@ public class EnemyAI : MonoBehaviour
 		else
 		{
 			_currentTarget = null;
-			StopFiring();
+			StartCoroutine(StopFiring());
 		}
 	}
 
@@ -159,11 +160,15 @@ public class EnemyAI : MonoBehaviour
 	}
 
 
-	void StopFiring()
+	IEnumerator StopFiring()
 	{
 		_isFiring = false;
 		_anim.SetBool("isShooting", false);
-		_waistToTurn.transform.rotation = Quaternion.Slerp(_waistToTurn.transform.rotation, Quaternion.LookRotation(Vector3.zero), Time.deltaTime * 10);
+		while (_waistToTurn.transform.rotation != Quaternion.LookRotation(Vector3.zero))
+		{
+			_waistToTurn.transform.rotation = Quaternion.Slerp(_waistToTurn.transform.rotation, Quaternion.LookRotation(Vector3.zero), Time.deltaTime * 10);
+			yield return null;
+		}
 	}
 
 
