@@ -70,6 +70,8 @@ public class UIManager : MonoBehaviour
 	[SerializeField]
 	private Text _statusText;
 
+	private int _selectedTower = 999;
+
 
 
 	private void OnEnable()
@@ -93,6 +95,9 @@ public class UIManager : MonoBehaviour
 		_buildGatlingGunButton.GetComponentInChildren<Text>().text = "$" + _assetDatabase.towers[0].buyFor;
 		_buildMissileLauncherButton.onClick.AddListener(() => BuildButtonClicked(1));
 		_buildMissileLauncherButton.GetComponentInChildren<Text>().text = "$" + _assetDatabase.towers[1].buyFor;
+
+		_upgradeGunCost.text = "$" + _assetDatabase.towers[0].upgradesTo.buyFor.ToString();
+		_upgradeMissileCost.text = "$" + _assetDatabase.towers[1].upgradesTo.buyFor.ToString();
 
 		DisableTowerOptions();
 	}
@@ -141,23 +146,23 @@ public class UIManager : MonoBehaviour
 		Tower tower = buildSpot.GetTower();
 		if (tower.towerType == 0 && tower.upgradesTo != null)
 		{
+			_selectedTower = 0;
 			if (tower.buyFor < GameManager.Instance.warFund)
 			{
 				_upgradeButtonGun.interactable = true;
 			}
 			_upgradeButtonMissile.interactable = false;
-			_upgradeGunCost.text = "$" + tower.upgradesTo.buyFor.ToString();
 			_upgradeButtonGun.onClick.RemoveAllListeners();
 			_upgradeButtonGun.onClick.AddListener(() => UpgradeButtonClicked(buildSpot));
 		}
 		else if (tower.towerType == 1 && tower.upgradesTo != null)
 		{
+			_selectedTower = 1;
 			if (tower.buyFor < GameManager.Instance.warFund)
 			{
 				_upgradeButtonMissile.interactable = true;
 			}
 			_upgradeButtonGun.interactable = false;
-			_upgradeMissileCost.text = "$" + tower.upgradesTo.buyFor.ToString();
 			_upgradeButtonMissile.onClick.RemoveAllListeners();
 			_upgradeButtonMissile.onClick.AddListener(() => UpgradeButtonClicked(buildSpot));
 		}
@@ -175,6 +180,7 @@ public class UIManager : MonoBehaviour
 		_upgradeButtonMissile.interactable = false;
 		_sellTowerButton.interactable = false;
 		_sellTowerRefund.text = "";
+		_selectedTower = 999;
 	}
 	#endregion
 
@@ -244,6 +250,24 @@ public class UIManager : MonoBehaviour
 		else
 		{
 			_buildMissileLauncherButton.interactable = true;
+		}
+
+		if (_selectedTower == 2 && amount < _assetDatabase.towers[2].buyFor)
+		{
+			_upgradeButtonGun.interactable = false;
+		}
+		else
+		{
+			_upgradeButtonGun.interactable = true;
+		}
+
+		if (_selectedTower == 3 && amount < _assetDatabase.towers[3].buyFor)
+		{
+			_upgradeButtonMissile.interactable = false;
+		}
+		else
+		{
+			_upgradeButtonMissile.interactable = true;
 		}
 	}
 

@@ -12,8 +12,6 @@ public enum EnemyType { WALKER, TANK }
 public class EnemyAI : MonoBehaviour
 {
 	public static event Action<GameObject, int> onEnemyDie;
-	public static event Action onEnemyRespawn;
-	public static event Action<int> onEnemyDamaged;
 
 	private NavMeshAgent _agent;
 	private Animator _anim;
@@ -165,6 +163,7 @@ public class EnemyAI : MonoBehaviour
 	{
 		_isFiring = false;
 		_anim.SetBool("isShooting", false);
+		_waistToTurn.transform.rotation = Quaternion.Slerp(_waistToTurn.transform.rotation, Quaternion.LookRotation(Vector3.zero), Time.deltaTime * 10);
 	}
 
 
@@ -197,7 +196,7 @@ public class EnemyAI : MonoBehaviour
 	{
 		if (_isDead == false)
 		{
-			onEnemyDamaged?.Invoke(amount);
+			_damagable.TakeDamage(amount);
 
 			if (_damagable.GetCurrentHealth() <= 0)
 			{
@@ -212,7 +211,7 @@ public class EnemyAI : MonoBehaviour
 	#region Death and Resurrection
 	void Resurrect()
 	{
-		onEnemyRespawn?.Invoke();
+		_damagable.ResetHealth();
 
 		// Make sure enemy is not in "dead" state
 		_agent.enabled = true;

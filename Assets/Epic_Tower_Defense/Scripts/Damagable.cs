@@ -12,20 +12,6 @@ public class Damagable : MonoBehaviour
 
 
 
-	private void OnEnable()
-	{
-		EnemyAI.onEnemyRespawn += ResetHealth;
-		EnemyAI.onEnemyDamaged += TakeDamage;
-	}
-
-
-	private void OnDisable()
-	{
-		EnemyAI.onEnemyRespawn -= ResetHealth;
-		EnemyAI.onEnemyDamaged -= TakeDamage;
-	}
-
-
 	public int GetCurrentHealth()
 	{
 		return _currentHealth;
@@ -38,13 +24,13 @@ public class Damagable : MonoBehaviour
 	}
 
 
-	void ResetHealth()
+	public void ResetHealth()
 	{
 		_currentHealth = _maxHealth;
 	}
 
 
-	void TakeDamage(int amount)
+	public void TakeDamage(int amount)
 	{
 		_currentHealth -= amount;
 	}

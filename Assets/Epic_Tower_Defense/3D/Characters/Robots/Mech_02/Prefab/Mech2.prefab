@@ -400,8 +400,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _type: 1
   _killValue: 100
-  _waistToTurn: {fileID: 1917370851618318}
-  _parentConstraint: {fileID: 0}
+  _waistToTurn: {fileID: 3994198593709738316}
+  _parentConstraint: {fileID: 4165058222782985171}
 --- !u!114 &2717621085988984597
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3113,6 +3113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4474272251219984}
   - component: {fileID: 3992706755002019531}
+  - component: {fileID: 4165058222782985171}
   m_Layer: 8
   m_Name: Body_Upper
   m_TagString: Untagged
@@ -3148,6 +3149,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Parent_Point: {fileID: 3994198593709738316}
+--- !u!1773428102 &4165058222782985171
+ParentConstraint:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1917370851618318}
+  m_Enabled: 1
+  m_Weight: 1
+  m_TranslationAtRest: {x: 0, y: 3.4957888, z: -0.3253311}
+  m_RotationAtRest: {x: 0, y: 0, z: 0}
+  m_TranslationOffsets:
+  - {x: -0.003999021, y: 0.050351977, z: -0.12671322}
+  m_RotationOffsets:
+  - {x: 0, y: 0, z: 0}
+  m_AffectTranslationX: 1
+  m_AffectTranslationY: 1
+  m_AffectTranslationZ: 1
+  m_AffectRotationX: 1
+  m_AffectRotationY: 1
+  m_AffectRotationZ: 1
+  m_IsContraintActive: 1
+  m_IsLocked: 0
+  m_Sources:
+  - sourceTransform: {fileID: 3994198593709738319}
+    weight: 1
 --- !u!1 &1960979768572722
 GameObject:
   m_ObjectHideFlags: 0
