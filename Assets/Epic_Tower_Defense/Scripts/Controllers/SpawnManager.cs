@@ -28,9 +28,26 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 
 
 
+	private void OnEnable()
+	{
+		GameManager.onLevelStart += OnLevelStart;
+	}
+
+
 	void Start()
 	{
 		_waveSpawns = _waveCount * waveMultiplier;
+	}
+
+
+	private void OnDisable()
+	{
+		GameManager.onLevelStart -= OnLevelStart;
+	}
+
+
+	void OnLevelStart()
+	{
 		StartCoroutine(SpawnEnemy());
 	}
 
@@ -59,7 +76,6 @@ public class SpawnManager : MonoSingleton<SpawnManager>
 			_waveSpawns = _waveCount * waveMultiplier;
 			_spawnCount = 0;
 			_killCount = 0;
-			StartCoroutine(SpawnEnemy());
 		}
 
 		enemy.gameObject.SetActive(false);

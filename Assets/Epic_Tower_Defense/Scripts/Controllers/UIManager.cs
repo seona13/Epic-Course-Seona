@@ -69,6 +69,8 @@ public class UIManager : MonoBehaviour
 	private GameObject _levelPanel;
 	[SerializeField]
 	private Text _levelText;
+	[SerializeField]
+	private Text _countdownText;
 
 	[Space(10)]
 
@@ -99,6 +101,7 @@ public class UIManager : MonoBehaviour
 		GameManager.onLevelComplete += OnLevelComplete;
 		GameManager.onGameWon += OnGameWon;
 		GameManager.onGameLost += OnGameLost;
+		GameManager.onCountdownDecrease += OnCountdownDecrease;
 	}
 
 
@@ -135,6 +138,7 @@ public class UIManager : MonoBehaviour
 		GameManager.onLevelComplete -= OnLevelComplete;
 		GameManager.onGameWon -= OnGameWon;
 		GameManager.onGameLost -= OnGameLost;
+		GameManager.onCountdownDecrease -= OnCountdownDecrease;
 	}
 
 
@@ -258,6 +262,18 @@ public class UIManager : MonoBehaviour
 	{
 		_statusText.text = "YOU\nLOST";
 		_levelPanel.SetActive(true);
+	}
+
+
+	void OnCountdownDecrease(int count)
+	{
+		if (count == 0)
+		{
+			_levelPanel.SetActive(false);
+			return;
+		}
+
+		_countdownText.text = count.ToString();
 	}
 	#endregion
 

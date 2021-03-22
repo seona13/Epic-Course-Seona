@@ -11,10 +11,12 @@ public class GameManager : MonoSingleton<GameManager>
 {
 	public static event Action<int> onLivesChanged;
 	public static event Action<int> onWarFundsChanged;
+	public static event Action onLevelStart;
 	public static event Action onLevelComplete;
 	public static event Action onGameWon;
 	public static event Action onGameLost;
 	public static event Action<Status> onStatusChanged;
+	public static event Action<int> onCountdownDecrease;
 
 	private float _fixedDeltaTime;
 	public int warFund = 500;
@@ -22,6 +24,7 @@ public class GameManager : MonoSingleton<GameManager>
 	private int _lives;
 	[SerializeField]
 	private Status _status = Status.NORMAL;
+	private WaitForSeconds _countdownDelay = new WaitForSeconds(1f);
 
 
 
@@ -46,6 +49,7 @@ public class GameManager : MonoSingleton<GameManager>
 		ChangeTimeScale(1);
 		LivesChanged();
 		onStatusChanged?.Invoke(_status);
+		StartCoroutine(CountdownRoutine());
 	}
 
 
@@ -157,7 +161,7 @@ public class GameManager : MonoSingleton<GameManager>
 		else
 		{
 			onLevelComplete?.Invoke();
-			// Countdown to next level
+			StartCoroutine(CountdownRoutine());
 		}
 	}
 
@@ -185,5 +189,20 @@ public class GameManager : MonoSingleton<GameManager>
 		{
 			onGameLost?.Invoke();
 		}
+	}
+
+
+	IEnumerator CountdownRoutine()
+	{
+		int i = 5;
+
+		while (i > 0)
+		{
+			i--;
+			onCountdownDecrease?.Invoke(i);
+			yield return _countdownDelay;
+		}
+
+		onLevelStart?.Invoke();
 	}
 }
